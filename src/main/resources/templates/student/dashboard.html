@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Student Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">John Doe</p>
+                <p class="user-sub">VU/2023/12345</p>
+            </div>
+            <a href="/logout" class="icon-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/student/dashboard}" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/student/book-ride}" class="nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Book Ride</span>
+            </a>
+            <a th:href="@{/student/riders}" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Available Riders</span>
+            </a>
+            <a th:href="@{/student/profile}" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <div class="mb-8">
+            <h2 class="page-title">Welcome back, John!</h2>
+            <p class="page-sub">Here's what's happening with your rides today</p>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Total Rides</span>
+                    <i class="fas fa-chart-line stat-icon"></i>
+                </div>
+                <p class="stat-value">24</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Available Riders</span>
+                    <i class="fas fa-map-marker-alt stat-icon"></i>
+                </div>
+                <p class="stat-value">8</p>
+                <p class="stat-hint">Online now</p>
+            </div>
+        </div>
+
+        <!-- QUICK ACTION -->
+        <div class="cta-card">
+            <h3 class="cta-card-title">Need a ride?</h3>
+            <p class="cta-card-sub">Book your next ride in seconds</p>
+            <a th:href="@{/student/book-ride}" class="btn-accent">Book a Ride Now</a>
+        </div>
+
+    </main>
+</div>
+
+
+</body>
+</html>

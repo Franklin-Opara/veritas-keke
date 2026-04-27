@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Riders - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-bus"></i></div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Admin Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">Administrator</p>
+                <p class="user-sub">System Admin</p>
+            </div>
+            <a href="/logout" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/admin/dashboard}" class="nav-item">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+            </a>
+            <a th:href="@{/admin/students}" class="nav-item">
+                <i class="fas fa-users"></i><span>Students</span>
+            </a>
+            <a th:href="@{/admin/riders}" class="nav-item active">
+                <i class="fas fa-car"></i><span>Riders</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="dashboard-main">
+
+        <div class="mb-8">
+            <h2 class="page-title">Riders Management</h2>
+            <p class="page-sub">View and manage all registered riders</p>
+        </div>
+
+        <!-- SEARCH -->
+        <div class="search-bar">
+            <i class="fas fa-search search-icon"></i>
+            <input type="text" id="search-input" class="form-input" style="padding-left: 40px;"
+                   placeholder="Search by name, keke number, or email..." onkeyup="searchRiders()">
+        </div>
+
+        <!-- STATS SUMMARY -->
+        <div class="list-summary">
+            <span>Total Riders: <strong style="color:#1A6B3C;">4</strong></span>
+            <div style="display:flex; gap:16px; font-size:13px; color:#6B7280;">
+                <span>Available: <strong style="color:#1A6B3C;">2</strong></span>
+                <span>Busy: <strong style="color:#F59E0B;">1</strong></span>
+                <span>Offline: <strong style="color:#6B7280;">1</strong></span>
+            </div>
+        </div>
+
+        <!-- RIDERS LIST -->
+        <div id="riders-list">
+
+            <div class="list-card" data-name="mr. johnson eze" data-keke="vu-001" data-email="johnson.eze@email.com">
+                <div class="list-card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Johnson" class="list-avatar">
+                    <div class="list-info">
+                        <div class="list-info-header">
+                            <div>
+                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+                                    <h3 class="list-name">Mr. Johnson Eze</h3>
+                                    <span class="badge-available">Available</span>
+                                </div>
+                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-001</div>
+                            </div>
+                            <button class="btn-delete" onclick="confirmDelete(this)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                        <div class="form-grid-2" style="margin-top:12px;">
+                            <div>
+                                <div class="list-detail"><i class="fas fa-envelope"></i> johnson.eze@email.com</div>
+                                <div class="list-detail"><i class="fas fa-phone"></i> +234 803 456 7890</div>
+                                <div class="list-detail"><i class="fas fa-credit-card"></i> First Bank of Nigeria • 1234567890</div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Total Rides</p>
+                                    <p class="mini-stat-value">245</p>
+                                </div>
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Joined</p>
+                                    <p class="mini-stat-value">Jan 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-card" data-name="mrs. adeyemi grace" data-keke="vu-002" data-email="adeyemi.grace@email.com">
+                <div class="list-card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adeyemi" alt="Adeyemi" class="list-avatar">
+                    <div class="list-info">
+                        <div class="list-info-header">
+                            <div>
+                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+                                    <h3 class="list-name">Mrs. Adeyemi Grace</h3>
+                                    <span class="badge-busy">Busy</span>
+                                </div>
+                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-002</div>
+                            </div>
+                            <button class="btn-delete" onclick="confirmDelete(this)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                        <div class="form-grid-2" style="margin-top:12px;">
+                            <div>
+                                <div class="list-detail"><i class="fas fa-envelope"></i> adeyemi.grace@email.com</div>
+                                <div class="list-detail"><i class="fas fa-phone"></i> +234 805 123 4567</div>
+                                <div class="list-detail"><i class="fas fa-credit-card"></i> GTBank • 0987654321</div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Total Rides</p>
+                                    <p class="mini-stat-value">312</p>
+                                </div>
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Joined</p>
+                                    <p class="mini-stat-value">Dec 2023</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-card" data-name="mr. okafor peter" data-keke="vu-003" data-email="okafor.peter@email.com">
+                <div class="list-card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Okafor" alt="Okafor" class="list-avatar">
+                    <div class="list-info">
+                        <div class="list-info-header">
+                            <div>
+                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+                                    <h3 class="list-name">Mr. Okafor Peter</h3>
+                                    <span class="badge-available">Available</span>
+                                </div>
+                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-003</div>
+                            </div>
+                            <button class="btn-delete" onclick="confirmDelete(this)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                        <div class="form-grid-2" style="margin-top:12px;">
+                            <div>
+                                <div class="list-detail"><i class="fas fa-envelope"></i> okafor.peter@email.com</div>
+                                <div class="list-detail"><i class="fas fa-phone"></i> +234 807 890 1234</div>
+                                <div class="list-detail"><i class="fas fa-credit-card"></i> Access Bank • 5555666677</div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Total Rides</p>
+                                    <p class="mini-stat-value">189</p>
+                                </div>
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Joined</p>
+                                    <p class="mini-stat-value">Feb 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-card" data-name="mr. ibrahim musa" data-keke="vu-004" data-email="ibrahim.musa@email.com">
+                <div class="list-card-inner">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ibrahim" alt="Ibrahim" class="list-avatar">
+                    <div class="list-info">
+                        <div class="list-info-header">
+                            <div>
+                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
+                                    <h3 class="list-name">Mr. Ibrahim Musa</h3>
+                                    <span class="badge-busy" style="background-color:#F3F4F6; color:#6B7280;">Offline</span>
+                                </div>
+                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-004</div>
+                            </div>
+                            <button class="btn-delete" onclick="confirmDelete(this)">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
+                        </div>
+                        <div class="form-grid-2" style="margin-top:12px;">
+                            <div>
+                                <div class="list-detail"><i class="fas fa-envelope"></i> ibrahim.musa@email.com</div>
+                                <div class="list-detail"><i class="fas fa-phone"></i> +234 806 234 5678</div>
+                                <div class="list-detail"><i class="fas fa-credit-card"></i> Zenith Bank • 7777888899</div>
+                            </div>
+                            <div class="form-grid-2">
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Total Rides</p>
+                                    <p class="mini-stat-value">156</p>
+                                </div>
+                                <div class="mini-stat">
+                                    <p class="mini-stat-label">Joined</p>
+                                    <p class="mini-stat-value">Mar 2024</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div id="no-results" style="display:none;" class="auth-card text-center">
+            <p class="page-sub">No riders found matching your search</p>
+        </div>
+
+    </main>
+</div>
+
+
+<script>
+    function searchRiders() {
+        const query = document.getElementById('search-input').value.toLowerCase();
+        const cards = document.querySelectorAll('.list-card');
+        let visible = 0;
+
+        cards.forEach(card => {
+            const name = card.getAttribute('data-name');
+            const keke = card.getAttribute('data-keke');
+            const email = card.getAttribute('data-email');
+            if (name.includes(query) || keke.includes(query) || email.includes(query)) {
+                card.style.display = 'block';
+                visible++;
+            } else {
+                card.style.display = 'none';
+            }
+        });
+
+        document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    let deleteTimers = {};
+    let timerCount = 0;
+
+    function confirmDelete(btn) {
+        if (btn.classList.contains('confirm')) {
+            btn.closest('.list-card').remove();
+        } else {
+            btn.classList.add('confirm');
+            btn.innerHTML = '<i class="fas fa-trash"></i> Confirm?';
+            const id = timerCount++;
+            deleteTimers[id] = setTimeout(() => {
+                btn.classList.remove('confirm');
+                btn.innerHTML = '<i class="fas fa-trash"></i> Delete';
+            }, 3000);
+        }
+    }
+</script>
+
+</body>
+</html>

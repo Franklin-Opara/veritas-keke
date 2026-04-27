@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Dashboard - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Rider Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">Mr. Johnson Eze</p>
+                <p class="user-sub">VU-001</p>
+            </div>
+            <a href="/logout" class="icon-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/rider/dashboard}" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/rider/requests}" class="nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Ride Requests</span>
+                <span class="nav-badge">2</span>
+            </a>
+            <a th:href="@{/rider/profile}" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <div class="mb-8">
+            <h2 class="page-title">Welcome back, Mr. Johnson!</h2>
+            <p class="page-sub">Here's your ride summary for today</p>
+        </div>
+
+        <!-- AVAILABILITY TOGGLE -->
+        <div class="auth-card" style="margin-bottom: 32px;">
+            <div class="availability-row">
+                <div>
+                    <h3 style="font-size:18px; font-weight:600; margin-bottom:4px;">Availability Status</h3>
+                    <p class="page-sub" id="toggle-sub">Toggle to stop receiving ride requests</p>
+                </div>
+                <div class="toggle-switch active" id="toggle-switch" onclick="toggleAvailability()">
+                    <div class="toggle-knob"></div>
+                </div>
+            </div>
+            <div class="availability-status" id="availability-status">
+                <span class="pulse-dot" id="status-dot"></span>
+                You are currently <strong id="status-text" style="color:#1A6B3C;">AVAILABLE</strong> for rides
+            </div>
+        </div>
+
+        <!-- STATS -->
+        <div style="max-width: 320px; margin-bottom: 32px;">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Total Rides</span>
+                    <i class="fas fa-chart-line stat-icon"></i>
+                </div>
+                <p class="stat-value">245</p>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-card" id="cta-section">
+            <div style="display:flex; justify-content:space-between; align-items:flex-start;">
+                <div>
+                    <h3 class="cta-card-title">You're online and ready!</h3>
+                    <p class="cta-card-sub">New ride requests will appear below</p>
+                </div>
+            </div>
+            <a th:href="@{/rider/requests}" class="btn-accent">View Ride Requests</a>
+        </div>
+
+    </main>
+</div>
+
+
+
+<script>
+    let isAvailable = true;
+
+    function toggleAvailability() {
+        isAvailable = !isAvailable;
+        const toggle = document.getElementById('toggle-switch');
+        const statusText = document.getElementById('status-text');
+        const statusDot = document.getElementById('status-dot');
+        const toggleSub = document.getElementById('toggle-sub');
+        const ctaSection = document.getElementById('cta-section');
+
+        if (isAvailable) {
+            toggle.classList.add('active');
+            statusText.textContent = 'AVAILABLE';
+            statusText.style.color = '#1A6B3C';
+            statusDot.style.backgroundColor = '#1A6B3C';
+            toggleSub.textContent = 'Toggle to stop receiving ride requests';
+            ctaSection.style.display = 'block';
+        } else {
+            toggle.classList.remove('active');
+            statusText.textContent = 'UNAVAILABLE';
+            statusText.style.color = '#6B7280';
+            statusDot.style.backgroundColor = '#6B7280';
+            statusDot.style.animation = 'none';
+            toggleSub.textContent = 'Toggle to start receiving ride requests';
+            ctaSection.style.display = 'none';
+        }
+    }
+</script>
+
+</body>
+</html>

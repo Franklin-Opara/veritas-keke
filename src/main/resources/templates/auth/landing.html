@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- HEADER -->
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-bus"></i>
+                </div>
+                <div>
+                    <h1 class="logo-title">Veritas Keke</h1>
+                    <p class="logo-sub">University Transport</p>
+                </div>
+            </div>
+            <div class="header-buttons">
+                <a href="/login" class="btn-outline">Login</a>
+                <a href="/register" class="btn-primary">Get Started</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="container text-center">
+            <h2 class="hero-title">Safe, Reliable Campus Transportation</h2>
+            <p class="hero-sub">Experience seamless transportation across Veritas University campus with our trusted Keke service</p>
+            <a href="/register" class="btn-accent">Register Now</a>
+        </div>
+    </section>
+
+    <!-- FEATURES -->
+    <section class="features">
+        <div class="container">
+            <h3 class="section-title">Why Choose Veritas Keke?</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h4>Safe & Secure</h4>
+                    <p>All riders are verified university students and staff. Track your ride in real-time.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h4>Quick & Convenient</h4>
+                    <p>Get a ride within minutes. Available throughout campus operating hours.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <h4>Campus Coverage</h4>
+                    <p>Full coverage of all university buildings, hostels, and facilities.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container text-center">
+            <h3 class="section-title">Ready to Get Moving?</h3>
+            <p class="cta-sub">Join thousands of students using Veritas Keke every day</p>
+            <a href="/register" class="btn-primary">Create Your Account</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container text-center">
+            <p>&copy; 2026 Veritas University. All rights reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>

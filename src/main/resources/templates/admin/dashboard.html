@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Admin Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">Administrator</p>
+                <p class="user-sub">System Admin</p>
+            </div>
+            <a href="/logout" class="icon-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/admin/dashboard}" class="nav-item active">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/admin/students}" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Students</span>
+            </a>
+            <a th:href="@{/admin/riders}" class="nav-item">
+                <i class="fas fa-car"></i>
+                <span>Riders</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <div class="mb-8">
+            <h2 class="page-title">Admin Dashboard</h2>
+            <p class="page-sub">Manage the Veritas Keke transportation system</p>
+        </div>
+
+        <!-- STATS CARDS -->
+        <div class="stats-grid" style="grid-template-columns: repeat(3, 1fr); margin-bottom: 32px;">
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Total Students</span>
+                    <i class="fas fa-users stat-icon"></i>
+                </div>
+                <p class="stat-value">1,245</p>
+                <p class="stat-hint">Registered users</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Total Riders</span>
+                    <i class="fas fa-car" style="color:#F59E0B; font-size:16px;"></i>
+                </div>
+                <p class="stat-value">24</p>
+                <p class="stat-hint">Active riders</p>
+            </div>
+            <div class="stat-card">
+                <div class="stat-card-header">
+                    <span class="stat-label">Total Rides</span>
+                    <i class="fas fa-chart-line stat-icon"></i>
+                </div>
+                <p class="stat-value">8,456</p>
+                <p class="stat-hint">All time</p>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="form-grid-2">
+            <a th:href="@{/admin/students}" class="quick-action-card">
+                <div class="quick-action-icon green">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div>
+                    <h3 class="quick-action-title">Manage Students</h3>
+                    <p class="quick-action-sub">View and manage student accounts</p>
+                </div>
+            </a>
+            <a th:href="@{/admin/riders}" class="quick-action-card">
+                <div class="quick-action-icon amber">
+                    <i class="fas fa-car"></i>
+                </div>
+                <div>
+                    <h3 class="quick-action-title">Manage Riders</h3>
+                    <p class="quick-action-sub">View and manage rider accounts</p>
+                </div>
+            </a>
+        </div>
+
+    </main>
+</div>
+
+
+
+</body>
+</html>

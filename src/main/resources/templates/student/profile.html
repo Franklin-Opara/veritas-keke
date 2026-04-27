@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Student Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">John Doe</p>
+                <p class="user-sub">VU/2023/12345</p>
+            </div>
+            <a href="/logout" class="icon-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/student/dashboard}" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/student/book-ride}" class="nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Book Ride</span>
+            </a>
+            <a th:href="@{/student/riders}" class="nav-item">
+                <i class="fas fa-users"></i>
+                <span>Available Riders</span>
+            </a>
+            <a th:href="@{/student/profile}" class="nav-item active">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+        <div style="max-width: 800px; margin: 0 auto;">
+
+            <div class="mb-8">
+                <h2 class="page-title">My Profile</h2>
+                <p class="page-sub">Manage your account information</p>
+            </div>
+
+            <div class="auth-card">
+
+                <!-- PROFILE HEADER -->
+                <div class="profile-header">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="Profile" class="profile-avatar">
+                    <div>
+                        <h3 class="profile-name">John Doe</h3>
+                        <p class="profile-role">Student</p>
+                    </div>
+                </div>
+
+                <!-- PROFILE INFO -->
+                <div class="form-grid-2">
+                    <div class="info-box">
+                        <div class="info-box-label">
+                            <i class="fas fa-user"></i> Full Name
+                        </div>
+                        <p class="info-box-value">John Doe</p>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-box-label">
+                            <i class="fas fa-id-card"></i> Matric Number
+                        </div>
+                        <p class="info-box-value">VU/2023/12345</p>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-box-label">
+                            <i class="fas fa-envelope"></i> Email Address
+                        </div>
+                        <p class="info-box-value">john.doe@veritas.edu.ng</p>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-box-label">
+                            <i class="fas fa-phone"></i> Phone Number
+                        </div>
+                        <p class="info-box-value">+234 803 456 7890</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+
+
+</body>
+</html>

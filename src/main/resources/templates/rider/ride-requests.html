@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ride Requests - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Rider Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">Mr. Johnson Eze</p>
+                <p class="user-sub">VU-001</p>
+            </div>
+            <a href="/logout" class="icon-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/rider/dashboard}" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/rider/requests}" class="nav-item active">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Ride Requests</span>
+                <span class="nav-badge">2</span>
+            </a>
+            <a th:href="@{/rider/profile}" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <div class="mb-8">
+            <h2 class="page-title">Ride Requests</h2>
+            <p class="page-sub">Accept ride requests from students</p>
+        </div>
+
+        <!-- CURRENT TRIP -->
+        <div id="current-trip" style="display:none;" class="current-trip-card">
+            <div class="current-trip-header">
+                <h3 style="font-size:18px; font-weight:600; margin:0;">Current Trip</h3>
+                <span class="badge-available">In Progress</span>
+            </div>
+
+            <div class="form-grid-2" style="margin-bottom: 24px;">
+                <div class="info-box">
+                    <div class="info-box-label"><i class="fas fa-user"></i> Student</div>
+                    <p class="info-box-value" id="trip-student"></p>
+                    <p style="font-size:13px; color:#6B7280; margin:4px 0 0;" id="trip-student-id"></p>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-label"><i class="fas fa-phone"></i> Contact</div>
+                    <a id="trip-phone-link" href="#" class="link-primary" style="font-size:15px;"></a>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-label"><i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i> Pickup</div>
+                    <p class="info-box-value" id="trip-pickup"></p>
+                </div>
+                <div class="info-box">
+                    <div class="info-box-label"><i class="fas fa-flag" style="color:#F59E0B;"></i> Destination</div>
+                    <p class="info-box-value" id="trip-destination"></p>
+                </div>
+            </div>
+
+            <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-size:24px; font-weight:700; color:#1A6B3C;" id="trip-fare"></span>
+                <button class="btn-primary" style="display:flex; align-items:center; gap:8px;" onclick="completeTrip()">
+                    <i class="fas fa-check"></i> Mark as Completed
+                </button>
+            </div>
+        </div>
+
+        <!-- NO REQUESTS -->
+        <div id="no-requests" style="display:none;">
+            <div class="auth-card text-center" style="padding: 48px 32px;">
+                <div class="feature-icon" style="margin: 0 auto 16px;">
+                    <i class="fas fa-map-marker-alt"></i>
+                </div>
+                <h3 style="font-size:18px; font-weight:600; margin-bottom:8px;">No ride requests</h3>
+                <p class="page-sub">New requests will appear here when students book rides</p>
+            </div>
+        </div>
+
+        <!-- PENDING REQUESTS -->
+        <div id="pending-requests">
+            <h3 style="font-size:18px; font-weight:600; margin-bottom:16px;">Pending Requests (2)</h3>
+
+            <!-- REQUEST CARD 1 -->
+            <div class="request-card" id="request-1">
+                <div class="form-grid-2" style="margin-bottom:16px;">
+                    <div>
+                        <div class="info-box-label" style="margin-bottom:8px;"><i class="fas fa-user"></i> Student</div>
+                        <p style="font-size:16px; font-weight:600; margin:0 0 4px;">John Doe</p>
+                        <p style="font-size:13px; color:#6B7280; margin:0 0 6px;">VU/2023/12345</p>
+                        <a href="tel:+2348034567890" class="link-primary" style="font-size:13px;">+234 803 456 7890</a>
+                    </div>
+                    <div>
+                        <div class="info-box" style="margin-bottom:8px;">
+                            <div class="info-box-label"><i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i> Pickup</div>
+                            <p class="info-box-value">Hostel A</p>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-box-label"><i class="fas fa-flag" style="color:#F59E0B;"></i> Destination</div>
+                            <p class="info-box-value">Library</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <div>
+                        <span style="font-size:24px; font-weight:700; color:#1A6B3C;">₦100</span>
+                        <span style="font-size:13px; color:#6B7280; margin-left:12px;">2 minutes ago</span>
+                    </div>
+                    <button class="btn-primary" onclick="acceptRide('request-1', 'John Doe', 'VU/2023/12345', '+234 803 456 7890', 'Hostel A', 'Library', '₦100')">
+                        Accept Ride
+                    </button>
+                </div>
+            </div>
+
+            <!-- REQUEST CARD 2 -->
+            <div class="request-card" id="request-2">
+                <div class="form-grid-2" style="margin-bottom:16px;">
+                    <div>
+                        <div class="info-box-label" style="margin-bottom:8px;"><i class="fas fa-user"></i> Student</div>
+                        <p style="font-size:16px; font-weight:600; margin:0 0 4px;">Jane Smith</p>
+                        <p style="font-size:13px; color:#6B7280; margin:0 0 6px;">VU/2023/67890</p>
+                        <a href="tel:+2348051234567" class="link-primary" style="font-size:13px;">+234 805 123 4567</a>
+                    </div>
+                    <div>
+                        <div class="info-box" style="margin-bottom:8px;">
+                            <div class="info-box-label"><i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i> Pickup</div>
+                            <p class="info-box-value">Faculty of Science</p>
+                        </div>
+                        <div class="info-box">
+                            <div class="info-box-label"><i class="fas fa-flag" style="color:#F59E0B;"></i> Destination</div>
+                            <p class="info-box-value">Cafeteria</p>
+                        </div>
+                    </div>
+                </div>
+                <div style="display:flex; align-items:center; justify-content:space-between;">
+                    <div>
+                        <span style="font-size:24px; font-weight:700; color:#1A6B3C;">₦100</span>
+                        <span style="font-size:13px; color:#6B7280; margin-left:12px;">5 minutes ago</span>
+                    </div>
+                    <button class="btn-primary" onclick="acceptRide('request-2', 'Jane Smith', 'VU/2023/67890', '+234 805 123 4567', 'Faculty of Science', 'Cafeteria', '₦100')">
+                        Accept Ride
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+    </main>
+</div>
+
+
+
+<script>
+    let hasActiveTrip = false;
+
+    function acceptRide(cardId, student, studentId, phone, pickup, destination, fare) {
+        if (hasActiveTrip) return;
+
+        const card = document.getElementById(cardId);
+
+        // Show ride taken message briefly then remove
+        const takenMsg = document.createElement('div');
+        takenMsg.className = 'ride-taken-msg';
+        takenMsg.innerHTML = '<i class="fas fa-times"></i> Checking availability...';
+        card.prepend(takenMsg);
+
+        setTimeout(() => {
+            // Set current trip
+            document.getElementById('trip-student').textContent = student;
+            document.getElementById('trip-student-id').textContent = studentId;
+            document.getElementById('trip-phone-link').textContent = phone;
+            document.getElementById('trip-phone-link').href = 'tel:' + phone.replace(/\s/g, '');
+            document.getElementById('trip-pickup').textContent = pickup;
+            document.getElementById('trip-destination').textContent = destination;
+            document.getElementById('trip-fare').textContent = 'Fare: ' + fare;
+
+            // Show current trip, hide accepted card
+            document.getElementById('current-trip').style.display = 'block';
+            card.remove();
+            hasActiveTrip = true;
+
+            // Hide all accept buttons
+            document.querySelectorAll('.request-card .btn-primary').forEach(btn => {
+                btn.style.display = 'none';
+            });
+
+            // Check if no more requests
+            checkEmptyRequests();
+        }, 800);
+    }
+
+    function completeTrip() {
+        document.getElementById('current-trip').style.display = 'none';
+        hasActiveTrip = false;
+
+        // Show accept buttons again
+        document.querySelectorAll('.request-card .btn-primary').forEach(btn => {
+            btn.style.display = 'inline-flex';
+        });
+
+        checkEmptyRequests();
+    }
+
+    function checkEmptyRequests() {
+        const cards = document.querySelectorAll('.request-card');
+        if (cards.length === 0 && !hasActiveTrip) {
+            document.getElementById('pending-requests').style.display = 'none';
+            document.getElementById('no-requests').style.display = 'block';
+        }
+    }
+</script>
+
+</body>
+</html>

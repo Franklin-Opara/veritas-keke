@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="auth-body">
+
+    <div class="auth-wrapper">
+
+        <!-- LOGO -->
+        <div class="auth-logo">
+            <div class="logo-icon large">
+                <i class="fas fa-bus"></i>
+            </div>
+            <h1 class="auth-title">Welcome Back</h1>
+            <p class="auth-sub">Sign in to your Veritas Keke account</p>
+        </div>
+
+        <!-- FORM CARD -->
+        <div class="auth-card">
+
+            <!-- ROLE SELECTION -->
+            <div class="form-group">
+                <label>Login as</label>
+                <div class="role-tabs">
+                    <button class="role-tab active" onclick="selectRole(this, 'student')">Student</button>
+                    <button class="role-tab" onclick="selectRole(this, 'rider')">Rider</button>
+                    <button class="role-tab" onclick="selectRole(this, 'admin')">Admin</button>
+                </div>
+            </div>
+
+            <!-- IDENTIFIER INPUT -->
+            <div class="form-group">
+                <label id="identifier-label">Student ID</label>
+                <input type="text" id="identifier-input" class="form-input" placeholder="Enter your student ID">
+            </div>
+
+            <!-- PASSWORD INPUT -->
+            <div class="form-group">
+                <label>Password</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password-input" class="form-input" placeholder="Enter your password">
+                    <button type="button" class="toggle-password" onclick="togglePassword()">
+                        <i class="fas fa-eye" id="eye-icon"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- REMEMBER ME & FORGOT PASSWORD -->
+            <div class="form-row">
+                <label class="checkbox-label">
+                    <input type="checkbox"> Remember me
+                </label>
+                <a href="#" class="link-primary">Forgot password?</a>
+            </div>
+
+            <!-- LOGIN BUTTON -->
+            <button class="btn-primary full-width">Sign In</button>
+
+            <!-- REGISTER LINK -->
+            <p class="auth-footer-text">
+                Don't have an account? <a href="/register" class="link-primary">Register here</a>
+            </p>
+
+        </div>
+
+        <!-- BACK TO HOME -->
+        <div class="text-center mt-16">
+            <a href="/landing" class="link-muted">← Back to Home</a>
+        </div>
+
+    </div>
+
+    <script>
+        function selectRole(btn, role) {
+            document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+
+            const label = document.getElementById('identifier-label');
+            const input = document.getElementById('identifier-input');
+
+            if (role === 'student') {
+                label.textContent = 'Student ID';
+                input.type = 'text';
+                input.placeholder = 'Enter your student ID';
+            } else {
+                label.textContent = 'Email';
+                input.type = 'email';
+                input.placeholder = 'Enter your email';
+            }
+        }
+
+        function togglePassword() {
+            const input = document.getElementById('password-input');
+            const icon = document.getElementById('eye-icon');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+    </script>
+
+</body>
+</html>

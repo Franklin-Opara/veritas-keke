@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Riders - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-bus"></i>
+            </div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Student Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">John Doe</p>
+                <p class="user-sub">VU/2023/12345</p>
+            </div>
+            <a href="/logout" class="icon-btn">
+                <i class="fas fa-sign-out-alt"></i>
+            </a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/student/dashboard}" class="nav-item">
+                <i class="fas fa-home"></i>
+                <span>Dashboard</span>
+            </a>
+            <a th:href="@{/student/book-ride}" class="nav-item">
+                <i class="fas fa-map-marker-alt"></i>
+                <span>Book Ride</span>
+            </a>
+            <a th:href="@{/student/riders}" class="nav-item active">
+                <i class="fas fa-users"></i>
+                <span>Available Riders</span>
+            </a>
+            <a th:href="@{/student/profile}" class="nav-item">
+                <i class="fas fa-user"></i>
+                <span>Profile</span>
+            </a>
+        </nav>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="dashboard-main">
+
+        <div class="mb-8">
+            <h2 class="page-title">Available Riders</h2>
+            <p class="page-sub">Choose from our verified and trusted riders</p>
+        </div>
+
+        <!-- STATS SUMMARY -->
+        <div class="riders-summary">
+            <div class="riders-summary-left">
+                <div class="pulse-dot"></div>
+                <span>5 riders available now</span>
+            </div>
+            <span class="riders-summary-right">Last updated: just now</span>
+        </div>
+
+        <!-- RIDERS GRID -->
+        <div class="riders-grid">
+
+            <!-- RIDER CARD 1 -->
+            <div class="rider-card">
+                <div class="rider-card-badge">
+                    <span class="badge-available">Available</span>
+                </div>
+                <div class="rider-card-image">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Mr. Johnson Eze">
+                </div>
+                <div class="rider-card-info">
+                    <h3>Mr. Johnson Eze</h3>
+                    <p>Plate: VU-001</p>
+                    <p class="rider-rides">245 rides completed</p>
+                </div>
+                <a href="tel:+2348034567890" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fas fa-phone"></i> +234 803 456 7890
+                </a>
+            </div>
+
+            <!-- RIDER CARD 2 -->
+            <div class="rider-card">
+                <div class="rider-card-badge">
+                    <span class="badge-available">Available</span>
+                </div>
+                <div class="rider-card-image">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adeyemi" alt="Mrs. Adeyemi Grace">
+                </div>
+                <div class="rider-card-info">
+                    <h3>Mrs. Adeyemi Grace</h3>
+                    <p>Plate: VU-002</p>
+                    <p class="rider-rides">312 rides completed</p>
+                </div>
+                <a href="tel:+2348051234567" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fas fa-phone"></i> +234 805 123 4567
+                </a>
+            </div>
+
+            <!-- RIDER CARD 3 -->
+            <div class="rider-card">
+                <div class="rider-card-badge">
+                    <span class="badge-available">Available</span>
+                </div>
+                <div class="rider-card-image">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Okafor" alt="Mr. Okafor Peter">
+                </div>
+                <div class="rider-card-info">
+                    <h3>Mr. Okafor Peter</h3>
+                    <p>Plate: VU-003</p>
+                    <p class="rider-rides">189 rides completed</p>
+                </div>
+                <a href="tel:+2348078901234" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fas fa-phone"></i> +234 807 890 1234
+                </a>
+            </div>
+
+            <!-- RIDER CARD 4 -->
+
+            <!-- RIDER CARD 5 -->
+            <div class="rider-card">
+                <div class="rider-card-badge">
+                    <span class="badge-available">Available</span>
+                </div>
+                <div class="rider-card-image">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Chioma" alt="Mrs. Chioma Nwosu">
+                </div>
+                <div class="rider-card-info">
+                    <h3>Mrs. Chioma Nwosu</h3>
+                    <p>Plate: VU-005</p>
+                    <p class="rider-rides">278 rides completed</p>
+                </div>
+                <a href="tel:+2348095678901" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fas fa-phone"></i> +234 809 567 8901
+                </a>
+            </div>
+
+            <!-- RIDER CARD 6 -->
+            <div class="rider-card">
+                <div class="rider-card-badge">
+                    <span class="badge-available">Available</span>
+                </div>
+                <div class="rider-card-image">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bello" alt="Mr. Bello Abdullahi">
+                </div>
+                <div class="rider-card-info">
+                    <h3>Mr. Bello Abdullahi</h3>
+                    <p>Plate: VU-006</p>
+                    <p class="rider-rides">134 rides completed</p>
+                </div>
+                <a href="tel:+2348023456789" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fas fa-phone"></i> +234 802 345 6789
+                </a>
+            </div>
+
+        </div>
+    </main>
+</div>
+
+
+
+</body>
+</html>
