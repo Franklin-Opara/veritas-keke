@@ -23,7 +23,4 @@ public class RiderService {
         riderRepository.save(rider);
     }
 
-    public List<Rider> getAvailableRiders() {
-        return riderRepository.findByIsAvailableTrue();
-    }
 }

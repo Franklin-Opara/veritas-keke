@@ -18,8 +18,6 @@ public class AuthController {
     private final StudentService studentService;
     private final RiderService riderService;
 
-    private final com.example.veritasKeke.repository.UserRepository userRepository;
-    private final com.example.veritasKeke.repository.AdminRepository adminRepository;
 
     @GetMapping({"/", "/landing"})
     public String landing() {

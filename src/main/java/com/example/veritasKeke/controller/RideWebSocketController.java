@@ -1,7 +1,6 @@
 package com.example.veritasKeke.controller;
 
 import com.example.veritasKeke.entity.Ride;
-import com.example.veritasKeke.service.RideService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
