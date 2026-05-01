@@ -69,7 +69,7 @@
                     <span class="stat-label">Total Students</span>
                     <i class="fas fa-users stat-icon"></i>
                 </div>
-                <p class="stat-value">1,245</p>
+                <p class="stat-value" th:text="${totalStudents}"></p>
                 <p class="stat-hint">Registered users</p>
             </div>
             <div class="stat-card">
@@ -77,7 +77,7 @@
                     <span class="stat-label">Total Riders</span>
                     <i class="fas fa-car" style="color:#F59E0B; font-size:16px;"></i>
                 </div>
-                <p class="stat-value">24</p>
+                <p class="stat-value" th:text="${totalRiders}"></p>
                 <p class="stat-hint">Active riders</p>
             </div>
             <div class="stat-card">
@@ -85,7 +85,7 @@
                     <span class="stat-label">Total Rides</span>
                     <i class="fas fa-chart-line stat-icon"></i>
                 </div>
-                <p class="stat-value">8,456</p>
+                <p class="stat-value" th:text="${totalRides}"></p>
                 <p class="stat-hint">All time</p>
             </div>
         </div>

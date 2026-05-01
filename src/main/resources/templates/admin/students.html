@@ -69,164 +69,39 @@
         <div id="students-list">
 
             <!-- STUDENT CARD -->
-            <div class="list-card" data-name="john doe" data-id="vu/2023/12345" data-email="john.doe@veritas.edu.ng">
+            <div th:each="student : ${students}" class="list-card"
+                 th:attr="data-name=${#strings.toLowerCase(student.user.firstName + ' ' + student.user.lastName)},
+              data-id=${#strings.toLowerCase(student.matricNumber)},
+              data-email=${#strings.toLowerCase(student.user.email)}">
                 <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="John Doe" class="list-avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student" alt="Student" class="list-avatar">
                     <div class="list-info">
                         <div class="list-info-header">
                             <div>
-                                <h3 class="list-name">John Doe</h3>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU/2023/12345</div>
+                                <h3 class="list-name" th:text="${student.user.firstName + ' ' + student.user.lastName}">Name</h3>
+                                <div class="list-sub"><i class="fas fa-id-card"></i> <span th:text="${student.matricNumber}">Matric</span></div>
                             </div>
-                            <button class="btn-delete" onclick="confirmDelete(this, 'student-1')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
+                            <form th:action="@{/admin/delete-student}" method="post"
+                                  onsubmit="return confirmDeleteForm(this)">
+                                <input type="hidden" name="studentId" th:value="${student.id}">
+                                <button type="submit" class="btn-delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
                         </div>
                         <div class="form-grid-2" style="margin-top:12px;">
                             <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> john.doe@veritas.edu.ng</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 803 456 7890</div>
+                                <div class="list-detail"><i class="fas fa-envelope"></i> <span th:text="${student.user.email}">Email</span></div>
+                                <div class="list-detail"><i class="fas fa-phone"></i> <span th:text="${student.phoneNumber}">Phone</span></div>
                             </div>
                             <div class="form-grid-2">
                                 <div class="mini-stat">
                                     <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">24</p>
+                                    <p class="mini-stat-value" th:text="${student.totalRides}">0</p>
                                 </div>
                                 <div class="mini-stat">
                                     <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Jan 2023</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="jane smith" data-id="vu/2023/67890" data-email="jane.smith@veritas.edu.ng">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Jane" alt="Jane Smith" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <h3 class="list-name">Jane Smith</h3>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU/2023/67890</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this, 'student-2')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> jane.smith@veritas.edu.ng</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 805 123 4567</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">18</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Feb 2023</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="mike johnson" data-id="vu/2023/11223" data-email="mike.johnson@veritas.edu.ng">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mike" alt="Mike Johnson" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <h3 class="list-name">Mike Johnson</h3>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU/2023/11223</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this, 'student-3')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> mike.johnson@veritas.edu.ng</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 807 890 1234</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">31</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Jan 2023</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="sarah williams" data-id="vu/2023/44556" data-email="sarah.williams@veritas.edu.ng">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah Williams" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <h3 class="list-name">Sarah Williams</h3>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU/2023/44556</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this, 'student-4')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> sarah.williams@veritas.edu.ng</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 809 234 5678</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">15</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Mar 2023</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="david brown" data-id="vu/2023/77889" data-email="david.brown@veritas.edu.ng">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=David" alt="David Brown" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <h3 class="list-name">David Brown</h3>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU/2023/77889</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this, 'student-5')">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> david.brown@veritas.edu.ng</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 806 567 8901</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">22</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Feb 2023</p>
+                                    <p class="mini-stat-value" th:text="${#temporals.format(student.user.createdAt, 'MMM yyyy')}">Jan 2023</p>
                                 </div>
                             </div>
                         </div>
@@ -266,20 +141,8 @@
         document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
     }
 
-    let deleteTimers = {};
-
-    function confirmDelete(btn, cardId) {
-        if (btn.classList.contains('confirm')) {
-            btn.closest('.list-card').remove();
-            clearTimeout(deleteTimers[cardId]);
-        } else {
-            btn.classList.add('confirm');
-            btn.innerHTML = '<i class="fas fa-trash"></i> Confirm?';
-            deleteTimers[cardId] = setTimeout(() => {
-                btn.classList.remove('confirm');
-                btn.innerHTML = '<i class="fas fa-trash"></i> Delete';
-            }, 3000);
-        }
+    function confirmDeleteForm(form) {
+        return confirm('Are you sure you want to delete this student?');
     }
 </script>
 

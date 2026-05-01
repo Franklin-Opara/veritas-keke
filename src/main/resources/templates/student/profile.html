@@ -24,8 +24,8 @@
         </div>
         <div class="header-user">
             <div class="user-info">
-                <p class="user-name">John Doe</p>
-                <p class="user-sub">VU/2023/12345</p>
+                <p class="user-name" th:text="${student.user.firstName + ' ' + student.user.lastName}"></p>
+                <p class="user-sub" th:text="${student.matricNumber}"></p>
             </div>
             <a href="/logout" class="icon-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -73,7 +73,7 @@
                 <div class="profile-header">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=John" alt="Profile" class="profile-avatar">
                     <div>
-                        <h3 class="profile-name">John Doe</h3>
+                        <h3 class="profile-name" th:text="${student.user.firstName + ' ' + student.user.lastName}"></h3>
                         <p class="profile-role">Student</p>
                     </div>
                 </div>
@@ -84,25 +84,25 @@
                         <div class="info-box-label">
                             <i class="fas fa-user"></i> Full Name
                         </div>
-                        <p class="info-box-value">John Doe</p>
+                        <p class="info-box-value" th:text="${student.user.firstName + ' ' + student.user.lastName}"></p>
                     </div>
                     <div class="info-box">
                         <div class="info-box-label">
                             <i class="fas fa-id-card"></i> Matric Number
                         </div>
-                        <p class="info-box-value">VU/2023/12345</p>
+                        <p class="info-box-value" th:text="${student.matricNumber}"></p>
                     </div>
                     <div class="info-box">
                         <div class="info-box-label">
                             <i class="fas fa-envelope"></i> Email Address
                         </div>
-                        <p class="info-box-value">john.doe@veritas.edu.ng</p>
+                        <p class="info-box-value" th:text="${student.user.email}"></p>
                     </div>
                     <div class="info-box">
                         <div class="info-box-label">
                             <i class="fas fa-phone"></i> Phone Number
                         </div>
-                        <p class="info-box-value">+234 803 456 7890</p>
+                        <p class="info-box-value" th:text="${student.phoneNumber}"></p>
                     </div>
                 </div>
 

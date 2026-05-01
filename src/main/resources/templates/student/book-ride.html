@@ -62,81 +62,87 @@
     <main class="dashboard-main">
         <div style="max-width: 800px; margin: 0 auto;">
 
-            <!-- STATE 1: FORM -->
-            <div id="state-form">
-                <div class="mb-8">
-                    <h2 class="page-title">Book a Ride</h2>
-                    <p class="page-sub">Enter your pickup and destination to find a rider</p>
-                </div>
+            <div th:if="${hasActiveRide}" class="error-banner" style="margin-bottom: 24px;">
+                <i class="fas fa-exclamation-circle"></i>
+                You already have an active ride. Please wait for it to complete before booking another.
+            </div>
 
-                <div class="auth-card">
-
-                    <!-- PICKUP -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-map-marker-alt" style="color:#1A6B3C; margin-right:6px;"></i>
-                            Pickup Location
-                        </label>
-                        <select id="pickup" class="form-input" onchange="updateFare()">
-                            <option value="">Select pickup location</option>
-                            <option>Main Gate</option>
-                            <option>Hostel A</option>
-                            <option>Hostel B</option>
-                            <option>Hostel C</option>
-                            <option>Hostel R</option>
-                            <option>Hostel S</option>
-                            <option>Faculty of Science</option>
-                            <option>Faculty of Arts</option>
-                            <option>Faculty of Engineering</option>
-                            <option>Library</option>
-                            <option>Cafeteria</option>
-                            <option>Sports Complex</option>
-                            <option>Administrative Block</option>
-                            <option>Medical Center</option>
-                        </select>
+            <div th:if="${hasActiveRide == null}">
+                <!-- STATE 1: FORM -->
+                <div id="state-form" th:if="${searching == null}">
+                    <div class="mb-8">
+                        <h2 class="page-title">Book a Ride</h2>
+                        <p class="page-sub">Enter your pickup and destination to find a rider</p>
                     </div>
 
-                    <!-- DESTINATION -->
-                    <div class="form-group">
-                        <label>
-                            <i class="fas fa-location-arrow" style="color:#F59E0B; margin-right:6px;"></i>
-                            Destination
-                        </label>
-                        <select id="destination" class="form-input" onchange="updateFare()">
-                            <option value="">Select destination</option>
-                            <option>Main Gate</option>
-                            <option>Hostel A</option>
-                            <option>Hostel B</option>
-                            <option>Hostel C</option>
-                            <option>Hostel R</option>
-                            <option>Hostel S</option>
-                            <option>Faculty of Science</option>
-                            <option>Faculty of Arts</option>
-                            <option>Faculty of Engineering</option>
-                            <option>Library</option>
-                            <option>Cafeteria</option>
-                            <option>Sports Complex</option>
-                            <option>Administrative Block</option>
-                            <option>Medical Center</option>
-                        </select>
+                    <div class="auth-card">
+                        <form action="/student/book-ride" method="post">
+                            <!-- PICKUP -->
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-map-marker-alt" style="color:#1A6B3C; margin-right:6px;"></i>
+                                    Pickup Location
+                                </label>
+                                <select name="pickupLocation" id="pickup" class="form-input" onchange="updateFare()">
+                                    <option value="">Select pickup location</option>
+                                    <option>Main Gate</option>
+                                    <option>Hostel A</option>
+                                    <option>Hostel B</option>
+                                    <option>Hostel C</option>
+                                    <option>Hostel R</option>
+                                    <option>Hostel S</option>
+                                    <option>Faculty of Science</option>
+                                    <option>Faculty of Arts</option>
+                                    <option>Faculty of Engineering</option>
+                                    <option>Library</option>
+                                    <option>Cafeteria</option>
+                                    <option>Sports Complex</option>
+                                    <option>Administrative Block</option>
+                                    <option>Medical Center</option>
+                                </select>
+                            </div>
+
+                            <!-- DESTINATION -->
+                            <div class="form-group">
+                                <label>
+                                    <i class="fas fa-navigation" style="color:#F59E0B; margin-right:6px;"></i>
+                                    Destination
+                                </label>
+                                <select name="destination" id="destination" class="form-input" onchange="updateFare()">
+                                    <option value="">Select destination</option>
+                                    <option>Main Gate</option>
+                                    <option>Hostel A</option>
+                                    <option>Hostel B</option>
+                                    <option>Hostel C</option>
+                                    <option>Hostel R</option>
+                                    <option>Hostel S</option>
+                                    <option>Faculty of Science</option>
+                                    <option>Faculty of Arts</option>
+                                    <option>Faculty of Engineering</option>
+                                    <option>Library</option>
+                                    <option>Cafeteria</option>
+                                    <option>Sports Complex</option>
+                                    <option>Administrative Block</option>
+                                    <option>Medical Center</option>
+                                </select>
+                            </div>
+
+                            <!-- FARE DISPLAY -->
+                            <div id="fare-display" class="fare-box" style="display:none;">
+                                <span>Estimated Fare:</span>
+                                <span class="fare-amount" id="fare-amount">₦100</span>
+                            </div>
+
+                            <button type="submit" class="btn-primary full-width">Request Ride</button>
+                        </form>
                     </div>
-
-                    <!-- FARE DISPLAY -->
-                    <div id="fare-display" class="fare-box" style="display:none;">
-                        <span>Estimated Fare:</span>
-                        <span class="fare-amount" id="fare-amount">₦100</span>
-                    </div>
-
-                    <!-- REQUEST BUTTON -->
-                    <button class="btn-primary full-width" onclick="requestRide()">
-                        Request Ride
-                    </button>
-
                 </div>
             </div>
 
+
+
             <!-- STATE 2: SEARCHING -->
-            <div id="state-searching" style="display:none;">
+            <div id="state-searching" th:if="${searching == true and ride != null and ride.status.name() == 'SEARCHING'}">
                 <div class="auth-card text-center" style="padding: 48px 32px;">
                     <div class="spinner"></div>
                     <h3 class="page-title" style="margin-top: 24px;">Searching for available riders...</h3>
@@ -145,102 +151,29 @@
                         <i class="fas fa-clock"></i>
                         <span>This usually takes less than 30 seconds</span>
                     </div>
-
-                    <!-- ROUTE INFO -->
                     <div class="route-display" style="margin-top: 32px;">
                         <div class="route-point">
                             <div class="route-dot green"></div>
-                            <span id="searching-pickup"></span>
+                            <span th:text="${ride.pickupLocation}">Pickup</span>
                         </div>
                         <div class="route-line"></div>
                         <div class="route-point">
                             <div class="route-dot amber"></div>
-                            <span id="searching-destination"></span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- STATE 3: RIDER FOUND -->
-            <div id="state-found" style="display:none;">
-                <div class="mb-8">
-                    <h2 class="page-title">Rider Found!</h2>
-                    <p class="page-sub">Your rider is on the way</p>
-                </div>
-
-                <div class="auth-card">
-
-                    <!-- SUCCESS MESSAGE -->
-                    <div class="success-banner">
-                        <i class="fas fa-check-circle"></i>
-                        Ride confirmed! Your rider has been notified and will contact you shortly
-                    </div>
-
-                    <!-- ROUTE DISPLAY -->
-                    <div class="route-display" style="margin-bottom: 24px;">
-                        <div class="route-point">
-                            <i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i>
-                            <div>
-                                <p style="font-size:11px; color:#6B7280; margin:0;">Pickup</p>
-                                <p style="margin:0; font-weight:500;" id="found-pickup"></p>
-                            </div>
-                        </div>
-                        <div class="route-line"></div>
-                        <div class="route-point">
-                            <i class="fas fa-location-arrow" style="color:#F59E0B;"></i>
-                            <div>
-                                <p style="font-size:11px; color:#6B7280; margin:0;">Destination</p>
-                                <p style="margin:0; font-weight:500;" id="found-destination"></p>
-                            </div>
+                            <span th:text="${ride.destination}">Destination</span>
                         </div>
                     </div>
 
-                    <!-- RIDER DETAILS -->
-                    <h3 style="font-size:18px; font-weight:600; margin-bottom:16px;">Rider Details</h3>
-                    <div style="display:flex; align-items:center; gap:24px; margin-bottom:24px;">
-                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Rider" class="rider-card-image" style="width:80px; height:80px; border-radius:50%; border: 4px solid #E8F5EE;">
-                        <div>
-                            <h4 style="font-size:18px; margin-bottom:8px;">Mr. Johnson Eze</h4>
-                            <p style="color:#6B7280; font-size:14px; margin:0;">
-                                <i class="fas fa-id-card" style="margin-right:6px;"></i> Plate: VU-001
-                            </p>
-                        </div>
-                    </div>
-
-                    <!-- CONTACT & BANK -->
-                    <div class="form-grid-2" style="margin-bottom:16px;">
-                        <div class="info-box">
-                            <div class="info-box-label">
-                                <i class="fas fa-phone"></i> Phone Number
-                            </div>
-                            <p class="info-box-value">+234 803 456 7890</p>
-                        </div>
-                        <div class="info-box">
-                            <div class="info-box-label">
-                                <i class="fas fa-credit-card"></i> Bank Details
-                            </div>
-                            <p style="font-size:13px; color:#1F2937; margin:0;">First Bank of Nigeria</p>
-                            <p class="info-box-value">1234567890</p>
-                        </div>
-                    </div>
-
-                    <!-- FARE -->
-                    <div class="fare-box amber" style="margin-bottom:24px;">
-                        <span>Fare Amount:</span>
-                        <span class="fare-amount amber" id="found-fare"></span>
-                    </div>
-                    <p style="font-size:13px; color:#6B7280; margin-bottom:24px;">
-                        Please transfer to the rider's account after your ride
-                    </p>
-
-                    <!-- ACTIONS -->
-                    <div class="form-grid-2">
-                        <a href="tel:+2348034567890" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                            <i class="fas fa-phone"></i> Call Rider
+                    <div style="margin-top: 24px;">
+                        <a href="/student/cancel-ride" class="btn-outline"
+                           style="display:inline-flex; align-items:center; gap:8px; color:#EF4444; border-color:#EF4444;">
+                            <i class="fas fa-times"></i> Cancel Ride
                         </a>
-                        <button class="btn-outline full-width" onclick="resetForm()">
-                            Book Another Ride
-                        </button>
+                    </div>
+
+                    <div id="search-timeout-error" class="error-banner" style="display:none; margin-top: 24px;">
+                        <i class="fas fa-exclamation-circle"></i>
+                        No riders are available at the moment. Please try again later or
+                        <a href="/student/cancel-ride" style="color:#EF4444; font-weight:600; margin-left:4px;">cancel the ride</a>
                     </div>
 
                 </div>
@@ -261,7 +194,7 @@
 
         if (pickup && destination) {
             fareDisplay.style.display = 'flex';
-            if (destination === 'Hostel R' || destination === 'Hostel S') {
+            if (destination === 'Hostel R' || destination === 'Hostel S' || pickup === 'Hostel R' || pickup === 'Hostel S') {
                 fareAmount.textContent = '₦200';
             } else {
                 fareAmount.textContent = '₦100';
@@ -286,15 +219,7 @@
         document.getElementById('state-form').style.display = 'none';
         document.getElementById('state-searching').style.display = 'block';
 
-        setTimeout(() => {
-            const fare = (destination === 'Hostel R' || destination === 'Hostel S') ? '₦200' : '₦100';
-            document.getElementById('found-pickup').textContent = pickup;
-            document.getElementById('found-destination').textContent = destination;
-            document.getElementById('found-fare').textContent = fare;
 
-            document.getElementById('state-searching').style.display = 'none';
-            document.getElementById('state-found').style.display = 'block';
-        }, 3000);
     }
 
     function resetForm() {
@@ -303,6 +228,29 @@
         document.getElementById('fare-display').style.display = 'none';
         document.getElementById('state-found').style.display = 'none';
         document.getElementById('state-form').style.display = 'block';
+    }
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+    var studentId = [[${session.studentId}]];
+    if (studentId) {
+        var socket = new SockJS('/ws');
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function() {
+            stompClient.subscribe('/topic/ride-status/' + studentId, function() {
+                window.location.href = '/student/ride-status';
+            });
+        });
+    }
+
+    // Show error after 40 seconds if still searching
+    var searchingState = document.getElementById('state-searching');
+    // 40 second timeout
+    if (document.getElementById('state-searching')) {
+        setTimeout(function() {
+            document.getElementById('search-timeout-error').style.display = 'flex';
+        }, 40000);
     }
 </script>
 

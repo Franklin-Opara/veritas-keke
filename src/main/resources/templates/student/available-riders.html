@@ -67,109 +67,41 @@
         </div>
 
         <!-- STATS SUMMARY -->
+        <!-- RIDERS SUMMARY -->
         <div class="riders-summary">
             <div class="riders-summary-left">
                 <div class="pulse-dot"></div>
-                <span>5 riders available now</span>
+                <span th:text="${riders.size()} + ' riders available now'">5 riders available now</span>
             </div>
             <span class="riders-summary-right">Last updated: just now</span>
         </div>
 
         <!-- RIDERS GRID -->
         <div class="riders-grid">
-
-            <!-- RIDER CARD 1 -->
-            <div class="rider-card">
+            <div th:each="rider : ${riders}" class="rider-card">
                 <div class="rider-card-badge">
                     <span class="badge-available">Available</span>
                 </div>
                 <div class="rider-card-image">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Mr. Johnson Eze">
+                    <img th:src="@{/images/default-avatar.png}" alt="Rider"
+                         onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=rider'">
                 </div>
                 <div class="rider-card-info">
-                    <h3>Mr. Johnson Eze</h3>
-                    <p>Plate: VU-001</p>
-                    <p class="rider-rides">245 rides completed</p>
+                    <h3 th:text="${rider.user.firstName + ' ' + rider.user.lastName}">Rider Name</h3>
+                    <p th:text="'Plate: ' + ${rider.plateNumber}">Plate: VU-001</p>
+                    <p class="rider-rides" th:text="${rider.totalRides} + ' rides completed'">0 rides completed</p>
                 </div>
-                <a href="tel:+2348034567890" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <i class="fas fa-phone"></i> +234 803 456 7890
+                <a th:href="'tel:' + ${rider.phoneNumber}" class="btn-primary full-width"
+                   style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                    <i class="fas fa-phone"></i>
+                    <span th:text="${rider.phoneNumber}">+234 803 456 7890</span>
                 </a>
             </div>
 
-            <!-- RIDER CARD 2 -->
-            <div class="rider-card">
-                <div class="rider-card-badge">
-                    <span class="badge-available">Available</span>
-                </div>
-                <div class="rider-card-image">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adeyemi" alt="Mrs. Adeyemi Grace">
-                </div>
-                <div class="rider-card-info">
-                    <h3>Mrs. Adeyemi Grace</h3>
-                    <p>Plate: VU-002</p>
-                    <p class="rider-rides">312 rides completed</p>
-                </div>
-                <a href="tel:+2348051234567" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <i class="fas fa-phone"></i> +234 805 123 4567
-                </a>
+            <!-- Empty state -->
+            <div th:if="${riders.isEmpty()}" style="grid-column: span 3; text-align:center; padding: 48px;">
+                <p class="page-sub">No riders available at the moment</p>
             </div>
-
-            <!-- RIDER CARD 3 -->
-            <div class="rider-card">
-                <div class="rider-card-badge">
-                    <span class="badge-available">Available</span>
-                </div>
-                <div class="rider-card-image">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Okafor" alt="Mr. Okafor Peter">
-                </div>
-                <div class="rider-card-info">
-                    <h3>Mr. Okafor Peter</h3>
-                    <p>Plate: VU-003</p>
-                    <p class="rider-rides">189 rides completed</p>
-                </div>
-                <a href="tel:+2348078901234" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <i class="fas fa-phone"></i> +234 807 890 1234
-                </a>
-            </div>
-
-            <!-- RIDER CARD 4 -->
-
-            <!-- RIDER CARD 5 -->
-            <div class="rider-card">
-                <div class="rider-card-badge">
-                    <span class="badge-available">Available</span>
-                </div>
-                <div class="rider-card-image">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Chioma" alt="Mrs. Chioma Nwosu">
-                </div>
-                <div class="rider-card-info">
-                    <h3>Mrs. Chioma Nwosu</h3>
-                    <p>Plate: VU-005</p>
-                    <p class="rider-rides">278 rides completed</p>
-                </div>
-                <a href="tel:+2348095678901" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <i class="fas fa-phone"></i> +234 809 567 8901
-                </a>
-            </div>
-
-            <!-- RIDER CARD 6 -->
-            <div class="rider-card">
-                <div class="rider-card-badge">
-                    <span class="badge-available">Available</span>
-                </div>
-                <div class="rider-card-image">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Bello" alt="Mr. Bello Abdullahi">
-                </div>
-                <div class="rider-card-info">
-                    <h3>Mr. Bello Abdullahi</h3>
-                    <p>Plate: VU-006</p>
-                    <p class="rider-rides">134 rides completed</p>
-                </div>
-                <a href="tel:+2348023456789" class="btn-primary full-width" style="display:flex; align-items:center; justify-content:center; gap:8px;">
-                    <i class="fas fa-phone"></i> +234 802 345 6789
-                </a>
-            </div>
-
         </div>
     </main>
 </div>

@@ -46,7 +46,7 @@
             <a th:href="@{/rider/requests}" class="nav-item active">
                 <i class="fas fa-map-marker-alt"></i>
                 <span>Ride Requests</span>
-                <span class="nav-badge">2</span>
+                <span class="nav-badge" th:if="${pendingRequests > 0}" th:text="${pendingRequests}"></span>
             </a>
             <a th:href="@{/rider/profile}" class="nav-item">
                 <i class="fas fa-user"></i>
@@ -64,42 +64,43 @@
         </div>
 
         <!-- CURRENT TRIP -->
-        <div id="current-trip" style="display:none;" class="current-trip-card">
+        <div th:if="${activeRide != null}" class="current-trip-card">
             <div class="current-trip-header">
                 <h3 style="font-size:18px; font-weight:600; margin:0;">Current Trip</h3>
                 <span class="badge-available">In Progress</span>
             </div>
-
             <div class="form-grid-2" style="margin-bottom: 24px;">
                 <div class="info-box">
                     <div class="info-box-label"><i class="fas fa-user"></i> Student</div>
-                    <p class="info-box-value" id="trip-student"></p>
-                    <p style="font-size:13px; color:#6B7280; margin:4px 0 0;" id="trip-student-id"></p>
+                    <p class="info-box-value" th:text="${activeRide.student.user.firstName + ' ' + activeRide.student.user.lastName}">Student Name</p>
+                    <p style="font-size:13px; color:#6B7280; margin:4px 0 0;" th:text="${activeRide.student.matricNumber}">Matric</p>
                 </div>
                 <div class="info-box">
                     <div class="info-box-label"><i class="fas fa-phone"></i> Contact</div>
-                    <a id="trip-phone-link" href="#" class="link-primary" style="font-size:15px;"></a>
+                    <a th:href="'tel:' + ${activeRide.student.phoneNumber}" class="link-primary" th:text="${activeRide.student.phoneNumber}">Phone</a>
                 </div>
                 <div class="info-box">
                     <div class="info-box-label"><i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i> Pickup</div>
-                    <p class="info-box-value" id="trip-pickup"></p>
+                    <p class="info-box-value" th:text="${activeRide.pickupLocation}">Pickup</p>
                 </div>
                 <div class="info-box">
                     <div class="info-box-label"><i class="fas fa-flag" style="color:#F59E0B;"></i> Destination</div>
-                    <p class="info-box-value" id="trip-destination"></p>
+                    <p class="info-box-value" th:text="${activeRide.destination}">Destination</p>
                 </div>
             </div>
-
             <div style="display:flex; align-items:center; justify-content:space-between;">
-                <span style="font-size:24px; font-weight:700; color:#1A6B3C;" id="trip-fare"></span>
-                <button class="btn-primary" style="display:flex; align-items:center; gap:8px;" onclick="completeTrip()">
-                    <i class="fas fa-check"></i> Mark as Completed
-                </button>
+                <span style="font-size:24px; font-weight:700; color:#1A6B3C;" th:text="'Fare: ₦' + ${activeRide.fare}">Fare</span>
+                <form th:action="@{/rider/complete-ride}" method="post">
+                    <input type="hidden" name="rideId" th:value="${activeRide.id}">
+                    <button type="submit" class="btn-primary" style="display:flex; align-items:center; gap:8px;">
+                        <i class="fas fa-check"></i> Mark as Completed
+                    </button>
+                </form>
             </div>
         </div>
 
         <!-- NO REQUESTS -->
-        <div id="no-requests" style="display:none;">
+        <div th:if="${searchingRides.isEmpty() and activeRide == null}">
             <div class="auth-card text-center" style="padding: 48px 32px;">
                 <div class="feature-icon" style="margin: 0 auto 16px;">
                     <i class="fas fa-map-marker-alt"></i>
@@ -110,71 +111,37 @@
         </div>
 
         <!-- PENDING REQUESTS -->
-        <div id="pending-requests">
-            <h3 style="font-size:18px; font-weight:600; margin-bottom:16px;">Pending Requests (2)</h3>
-
-            <!-- REQUEST CARD 1 -->
-            <div class="request-card" id="request-1">
+        <div th:if="${!searchingRides.isEmpty()}">
+            <h3 style="font-size:18px; font-weight:600; margin-bottom:16px;">
+                Pending Requests (<span th:text="${searchingRides.size()}">0</span>)
+            </h3>
+            <div th:each="ride : ${searchingRides}" class="request-card">
                 <div class="form-grid-2" style="margin-bottom:16px;">
                     <div>
                         <div class="info-box-label" style="margin-bottom:8px;"><i class="fas fa-user"></i> Student</div>
-                        <p style="font-size:16px; font-weight:600; margin:0 0 4px;">John Doe</p>
-                        <p style="font-size:13px; color:#6B7280; margin:0 0 6px;">VU/2023/12345</p>
-                        <a href="tel:+2348034567890" class="link-primary" style="font-size:13px;">+234 803 456 7890</a>
+                        <p style="font-size:16px; font-weight:600; margin:0 0 4px;" th:text="${ride.student.user.firstName + ' ' + ride.student.user.lastName}">Student</p>
+                        <p style="font-size:13px; color:#6B7280; margin:0 0 6px;" th:text="${ride.student.matricNumber}">Matric</p>
+                        <a th:href="'tel:' + ${ride.student.phoneNumber}" class="link-primary" style="font-size:13px;" th:text="${ride.student.phoneNumber}">Phone</a>
                     </div>
                     <div>
                         <div class="info-box" style="margin-bottom:8px;">
                             <div class="info-box-label"><i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i> Pickup</div>
-                            <p class="info-box-value">Hostel A</p>
+                            <p class="info-box-value" th:text="${ride.pickupLocation}">Pickup</p>
                         </div>
                         <div class="info-box">
                             <div class="info-box-label"><i class="fas fa-flag" style="color:#F59E0B;"></i> Destination</div>
-                            <p class="info-box-value">Library</p>
+                            <p class="info-box-value" th:text="${ride.destination}">Destination</p>
                         </div>
                     </div>
                 </div>
                 <div style="display:flex; align-items:center; justify-content:space-between;">
-                    <div>
-                        <span style="font-size:24px; font-weight:700; color:#1A6B3C;">₦100</span>
-                        <span style="font-size:13px; color:#6B7280; margin-left:12px;">2 minutes ago</span>
-                    </div>
-                    <button class="btn-primary" onclick="acceptRide('request-1', 'John Doe', 'VU/2023/12345', '+234 803 456 7890', 'Hostel A', 'Library', '₦100')">
-                        Accept Ride
-                    </button>
+                    <span style="font-size:24px; font-weight:700; color:#1A6B3C;" th:text="'₦' + ${ride.fare}">₦100</span>
+                    <form th:action="@{/rider/accept-ride}" method="post" th:if="${activeRide == null}">
+                        <input type="hidden" name="rideId" th:value="${ride.id}">
+                        <button type="submit" class="btn-primary">Accept Ride</button>
+                    </form>
                 </div>
             </div>
-
-            <!-- REQUEST CARD 2 -->
-            <div class="request-card" id="request-2">
-                <div class="form-grid-2" style="margin-bottom:16px;">
-                    <div>
-                        <div class="info-box-label" style="margin-bottom:8px;"><i class="fas fa-user"></i> Student</div>
-                        <p style="font-size:16px; font-weight:600; margin:0 0 4px;">Jane Smith</p>
-                        <p style="font-size:13px; color:#6B7280; margin:0 0 6px;">VU/2023/67890</p>
-                        <a href="tel:+2348051234567" class="link-primary" style="font-size:13px;">+234 805 123 4567</a>
-                    </div>
-                    <div>
-                        <div class="info-box" style="margin-bottom:8px;">
-                            <div class="info-box-label"><i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i> Pickup</div>
-                            <p class="info-box-value">Faculty of Science</p>
-                        </div>
-                        <div class="info-box">
-                            <div class="info-box-label"><i class="fas fa-flag" style="color:#F59E0B;"></i> Destination</div>
-                            <p class="info-box-value">Cafeteria</p>
-                        </div>
-                    </div>
-                </div>
-                <div style="display:flex; align-items:center; justify-content:space-between;">
-                    <div>
-                        <span style="font-size:24px; font-weight:700; color:#1A6B3C;">₦100</span>
-                        <span style="font-size:13px; color:#6B7280; margin-left:12px;">5 minutes ago</span>
-                    </div>
-                    <button class="btn-primary" onclick="acceptRide('request-2', 'Jane Smith', 'VU/2023/67890', '+234 805 123 4567', 'Faculty of Science', 'Cafeteria', '₦100')">
-                        Accept Ride
-                    </button>
-                </div>
-            </div>
-
         </div>
 
     </main>
@@ -240,6 +207,18 @@
             document.getElementById('no-requests').style.display = 'block';
         }
     }
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    var socket = new SockJS('/ws');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function() {
+        stompClient.subscribe('/topic/ride-requests', function() {
+            window.location.reload();
+        });
+    });
 </script>
 
 </body>

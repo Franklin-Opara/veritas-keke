@@ -24,8 +24,8 @@
         </div>
         <div class="header-user">
             <div class="user-info">
-                <p class="user-name">Mr. Johnson Eze</p>
-                <p class="user-sub">VU-001</p>
+                <p class="user-name" th:text="${rider.user.firstName + ' ' + rider.user.lastName}"></p>
+                <p class="user-sub" th:text="${rider.plateNumber}"></p>
             </div>
             <a href="/logout" class="icon-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -46,7 +46,7 @@
             <a th:href="@{/rider/requests}" class="nav-item">
                 <i class="fas fa-map-marker-alt"></i>
                 <span>Ride Requests</span>
-                <span class="nav-badge">2</span>
+                <span class="nav-badge" th:if="${pendingRequests > 0}" th:text="${pendingRequests}"></span>
             </a>
             <a th:href="@{/rider/profile}" class="nav-item">
                 <i class="fas fa-user"></i>
@@ -58,8 +58,13 @@
     <!-- MAIN CONTENT -->
     <main class="dashboard-main">
 
+        <div th:if="${param.unavailable}" class="error-banner" style="margin-bottom: 24px;">
+            <i class="fas fa-exclamation-circle"></i>
+            You must be available to view ride requests. Please toggle your availability first.
+        </div>
+
         <div class="mb-8">
-            <h2 class="page-title">Welcome back, Mr. Johnson!</h2>
+            <h2 class="page-title" th:text="'Welcome back, ' + ${rider.user.firstName} + '!'"></h2>
             <p class="page-sub">Here's your ride summary for today</p>
         </div>
 
@@ -70,13 +75,14 @@
                     <h3 style="font-size:18px; font-weight:600; margin-bottom:4px;">Availability Status</h3>
                     <p class="page-sub" id="toggle-sub">Toggle to stop receiving ride requests</p>
                 </div>
-                <div class="toggle-switch active" id="toggle-switch" onclick="toggleAvailability()">
+                <div class="toggle-switch" th:classappend="${rider.isAvailable} ? 'active'" id="toggle-switch" onclick="submitToggle()">
                     <div class="toggle-knob"></div>
                 </div>
             </div>
             <div class="availability-status" id="availability-status">
-                <span class="pulse-dot" id="status-dot"></span>
-                You are currently <strong id="status-text" style="color:#1A6B3C;">AVAILABLE</strong> for rides
+                <span class="pulse-dot" id="status-dot" th:style="${rider.isAvailable} ? 'background-color:#1A6B3C;' : 'background-color:#6B7280;'"></span>
+                You are currently <strong th:text="${rider.isAvailable} ? 'AVAILABLE' : 'UNAVAILABLE'"
+                    th:style="${rider.isAvailable} ? 'color:#1A6B3C;' : 'color:#6B7280;'">AVAILABLE</strong> for rides
             </div>
         </div>
 
@@ -87,20 +93,21 @@
                     <span class="stat-label">Total Rides</span>
                     <i class="fas fa-chart-line stat-icon"></i>
                 </div>
-                <p class="stat-value">245</p>
+                <p class="stat-value" th:text="${rider.totalRides}"></p>
             </div>
         </div>
 
         <!-- CTA -->
-        <div class="cta-card" id="cta-section">
+        <div class="cta-card" th:if="${rider.isAvailable}">
             <div style="display:flex; justify-content:space-between; align-items:flex-start;">
                 <div>
                     <h3 class="cta-card-title">You're online and ready!</h3>
-                    <p class="cta-card-sub">New ride requests will appear below</p>
+                    <p class="cta-card-sub" th:text="${pendingRequests > 0} ? 'You have ' + ${pendingRequests} + ' pending ride request(s)' : 'New ride requests will appear below'">New ride requests will appear below</p>
                 </div>
             </div>
             <a th:href="@{/rider/requests}" class="btn-accent">View Ride Requests</a>
         </div>
+        <form id="toggle-form" action="/rider/toggle-availability" method="post" style="display:none;"></form>
 
     </main>
 </div>
@@ -110,30 +117,49 @@
 <script>
     let isAvailable = true;
 
-    function toggleAvailability() {
-        isAvailable = !isAvailable;
-        const toggle = document.getElementById('toggle-switch');
-        const statusText = document.getElementById('status-text');
-        const statusDot = document.getElementById('status-dot');
-        const toggleSub = document.getElementById('toggle-sub');
-        const ctaSection = document.getElementById('cta-section');
+    function submitToggle() {
+        document.getElementById('toggle-form').submit();
+    }
+</script>
 
-        if (isAvailable) {
-            toggle.classList.add('active');
-            statusText.textContent = 'AVAILABLE';
-            statusText.style.color = '#1A6B3C';
-            statusDot.style.backgroundColor = '#1A6B3C';
-            toggleSub.textContent = 'Toggle to stop receiving ride requests';
-            ctaSection.style.display = 'block';
-        } else {
-            toggle.classList.remove('active');
-            statusText.textContent = 'UNAVAILABLE';
-            statusText.style.color = '#6B7280';
-            statusDot.style.backgroundColor = '#6B7280';
-            statusDot.style.animation = 'none';
-            toggleSub.textContent = 'Toggle to start receiving ride requests';
-            ctaSection.style.display = 'none';
-        }
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+    var notificationSound = new Audio('/sounds/newRequest.mp3');
+
+    var isAvailable = /*[[${rider.isAvailable}]]*/ false;
+
+    var socket = new SockJS('/ws');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function() {
+        stompClient.subscribe('/topic/ride-requests', function() {
+            if (!isAvailable) return; // ignore if unavailable
+
+            notificationSound.play();
+
+            var badge = document.querySelector('.nav-badge');
+            if (badge) {
+                badge.style.display = 'inline';
+                badge.textContent = parseInt(badge.textContent || '0') + 1;
+            } else {
+                var requestLink = document.querySelector('a[href="/rider/requests"]');
+                var newBadge = document.createElement('span');
+                newBadge.className = 'nav-badge';
+                newBadge.textContent = '1';
+                requestLink.appendChild(newBadge);
+            }
+
+            var ctaSub = document.querySelector('.cta-card-sub');
+            if (ctaSub) {
+                var match = ctaSub.textContent.match(/\d+/);
+                var current = match ? parseInt(match[0]) : 0;
+                ctaSub.textContent = 'You have ' + (current + 1) + ' pending ride request(s)';
+            }
+        });
+    });
+
+    function submitToggle() {
+        document.getElementById('toggle-form').submit();
     }
 </script>
 

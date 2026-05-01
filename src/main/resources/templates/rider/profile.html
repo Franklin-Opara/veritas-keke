@@ -24,8 +24,8 @@
         </div>
         <div class="header-user">
             <div class="user-info">
-                <p class="user-name">Mr. Johnson Eze</p>
-                <p class="user-sub">VU-001</p>
+                <p class="user-name" th:text="${rider.user.firstName + ' ' + rider.user.lastName}"></p>
+                <p class="user-sub" th:text="${rider.plateNumber}"></p>
             </div>
             <a href="/logout" class="icon-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -46,7 +46,7 @@
             <a th:href="@{/rider/requests}" class="nav-item">
                 <i class="fas fa-map-marker-alt"></i>
                 <span>Ride Requests</span>
-                <span class="nav-badge">2</span>
+                <span class="nav-badge" th:if="${pendingRequests > 0}" th:text="${pendingRequests}"></span>
             </a>
             <a th:href="@{/rider/profile}" class="nav-item active">
                 <i class="fas fa-user"></i>
@@ -70,7 +70,7 @@
                 <div class="profile-header">
                     <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Profile" class="profile-avatar">
                     <div>
-                        <h3 class="profile-name">Mr. Johnson Eze</h3>
+                        <h3 class="profile-name" th:text="${rider.user.firstName + ' ' + rider.user.lastName}"></h3>
                         <p class="profile-role">Rider</p>
                     </div>
                 </div>
@@ -79,24 +79,24 @@
                 <div class="form-grid-2">
                     <div class="info-box">
                         <div class="info-box-label"><i class="fas fa-user"></i> Full Name</div>
-                        <p class="info-box-value">Mr. Johnson Eze</p>
+                        <p class="info-box-value" th:text="${rider.user.firstName + ' ' + rider.user.lastName}"></p>
                     </div>
                     <div class="info-box">
-                        <div class="info-box-label"><i class="fas fa-bus"></i> Keke Plate Number</div>
-                        <p class="info-box-value">VU-001</p>
+                        <div class="info-box-label"><i class="fas fa-bus"></i>Plate Number</div>
+                        <p class="info-box-value" th:text="${rider.plateNumber}"></p>
                     </div>
                     <div class="info-box">
                         <div class="info-box-label"><i class="fas fa-envelope"></i> Email Address</div>
-                        <p class="info-box-value">johnson.eze@email.com</p>
+                        <p class="info-box-value" th:text="${rider.user.email}"></p>
                     </div>
                     <div class="info-box">
                         <div class="info-box-label"><i class="fas fa-phone"></i> Phone Number</div>
-                        <p class="info-box-value">+234 803 456 7890</p>
+                        <p class="info-box-value" th:text="${rider.phoneNumber}"></p>
                     </div>
                     <div class="info-box" style="grid-column: span 2;">
                         <div class="info-box-label"><i class="fas fa-credit-card"></i> Bank Details</div>
-                        <p style="font-size:13px; color:#6B7280; margin:0;">First Bank of Nigeria</p>
-                        <p class="info-box-value">1234567890</p>
+                        <p style="font-size:13px; color:#6B7280; margin:0;" th:text="${rider.bankName}"></p>
+                        <p class="info-box-value" th:text="${rider.accountNumber}"></p>
                     </div>
                 </div>
 
@@ -105,6 +105,35 @@
     </main>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script>
+    var notificationSound = new Audio('/sounds/newRequest.mp3');
+
+    var socket = new SockJS('/ws');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function() {
+        stompClient.subscribe('/topic/ride-requests', function() {
+            notificationSound.play();
+
+            var badge = document.querySelector('.nav-badge');
+            if (badge) {
+                badge.style.display = 'inline';
+                badge.textContent = parseInt(badge.textContent || '0') + 1;
+            } else {
+                var requestLink = document.querySelector('a[href="/rider/requests"]');
+                var newBadge = document.createElement('span');
+                newBadge.className = 'nav-badge';
+                newBadge.textContent = '1';
+                requestLink.appendChild(newBadge);
+            }
+        });
+    });
+
+    function submitToggle() {
+        document.getElementById('toggle-form').submit();
+    }
+</script>
 
 
 </body>

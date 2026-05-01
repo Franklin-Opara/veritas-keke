@@ -22,32 +22,33 @@
     </div>
 
     <!-- FORM CARD -->
-    <div class="auth-card">
+    <form action="/register" method="post" class="auth-card">
 
         <!-- ROLE SELECTION -->
         <div class="form-group">
             <label>Register as</label>
             <div class="role-tabs" style="grid-template-columns: repeat(2, 1fr);">
-                <button class="role-tab active" onclick="selectRole(this, 'student')">
+                <button type="button" class="role-tab active" onclick="selectRole(this, 'student')">
                     <div>Student</div>
                     <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Book rides</div>
                 </button>
-                <button class="role-tab" onclick="selectRole(this, 'rider')">
+                <button type="button" class="role-tab" onclick="selectRole(this, 'rider')">
                     <div>Rider</div>
                     <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Offer rides</div>
                 </button>
             </div>
+            <input type="hidden" name="role" id="role-input" value="student">
         </div>
 
         <!-- NAME ROW -->
         <div class="form-grid-2">
             <div class="form-group">
                 <label>First Name</label>
-                <input type="text" class="form-input" placeholder="Enter first name">
+                <input type="text" name="firstName" class="form-input" placeholder="Enter first name" required>
             </div>
             <div class="form-group">
                 <label>Last Name</label>
-                <input type="text" class="form-input" placeholder="Enter last name">
+                <input type="text" name="lastName" class="form-input" placeholder="Enter last name" required>
             </div>
         </div>
 
@@ -55,7 +56,7 @@
         <div id="student-fields">
             <div class="form-group">
                 <label>Matric Number</label>
-                <input type="text" class="form-input" placeholder="Enter your matric number">
+                <input type="text" name="matricNumber" class="form-input" placeholder="Enter your matric number">
             </div>
         </div>
 
@@ -63,30 +64,30 @@
         <div id="rider-fields" style="display: none;">
             <div class="form-grid-2">
                 <div class="form-group">
-                    <label>Keke Plate Number</label>
-                    <input type="text" class="form-input" placeholder="e.g., VU-123">
+                    <label>Plate Number</label>
+                    <input type="text" name="plateNumber" class="form-input" placeholder="e.g., VU-123">
                 </div>
                 <div class="form-group">
                     <label>Bank Name</label>
-                    <input type="text" class="form-input" placeholder="Enter bank name">
+                    <input type="text" name="bankName" class="form-input" placeholder="Enter bank name">
                 </div>
             </div>
             <div class="form-group">
                 <label>Account Number</label>
-                <input type="text" class="form-input" placeholder="Enter account number">
+                <input type="text" name="accountNumber" class="form-input" placeholder="Enter account number">
             </div>
         </div>
 
         <!-- EMAIL -->
         <div class="form-group">
             <label>Email Address</label>
-            <input type="email" class="form-input" placeholder="Enter your email">
+            <input type="email" name="email" class="form-input" placeholder="Enter your email" required>
         </div>
 
         <!-- PHONE -->
         <div class="form-group">
             <label>Phone Number</label>
-            <input type="tel" class="form-input" placeholder="Enter phone number">
+            <input type="tel" name="phoneNumber" class="form-input" placeholder="Enter phone number" required>
         </div>
 
         <!-- PASSWORD ROW -->
@@ -94,7 +95,7 @@
             <div class="form-group">
                 <label>Password</label>
                 <div class="input-wrapper">
-                    <input type="password" id="password-input" class="form-input" placeholder="Create password">
+                    <input type="password" name="password" id="password-input" class="form-input" placeholder="Create password" required>
                     <button type="button" class="toggle-password" onclick="togglePassword('password-input', 'eye-icon-1')">
                         <i class="fas fa-eye" id="eye-icon-1"></i>
                     </button>
@@ -118,29 +119,29 @@
                 <i class="fas fa-upload upload-icon"></i>
                 <p class="upload-text">Click to upload or drag and drop</p>
                 <p class="upload-hint">PNG, JPG up to 5MB</p>
-                <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                <input type="file" id="photo-upload" name="profilePhoto" accept="image/*" style="display: none;">
             </div>
         </div>
 
         <!-- TERMS -->
         <div class="form-group">
             <label class="checkbox-label" style="align-items: flex-start;">
-                <input type="checkbox" style="margin-top: 3px;">
+                <input type="checkbox" required style="margin-top: 3px;" class="custom-checkbox">
                 <span style="font-size: 13px; color: #6B7280;">
-                        I agree to the <a href="#" class="link-primary">Terms and Conditions</a> and <a href="#" class="link-primary">Privacy Policy</a>
-                    </span>
+                I agree to the <a href="#" class="link-primary">Terms and Conditions</a> and <a href="#" class="link-primary">Privacy Policy</a>
+            </span>
             </label>
         </div>
 
         <!-- REGISTER BUTTON -->
-        <button class="btn-primary full-width">Create Account</button>
+        <button type="submit" class="btn-primary full-width">Create Account</button>
 
         <!-- LOGIN LINK -->
         <p class="auth-footer-text" style="margin-top: 16px;">
             Already have an account? <a href="/login" class="link-primary">Sign in here</a>
         </p>
 
-    </div>
+    </form>
 
     <!-- BACK TO HOME -->
     <div class="text-center mt-16">
@@ -153,6 +154,7 @@
     function selectRole(btn, role) {
         document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
         btn.classList.add('active');
+        document.getElementById('role-input').value = role;
 
         if (role === 'student') {
             document.getElementById('student-fields').style.display = 'block';

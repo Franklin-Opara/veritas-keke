@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rider Found - Veritas Keke</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="dashboard-body">
+
+<!-- HEADER -->
+<header class="dashboard-header">
+    <div class="dashboard-header-inner">
+        <div class="logo">
+            <div class="logo-icon"><i class="fas fa-bus"></i></div>
+            <div>
+                <h1 class="logo-title">Veritas Keke</h1>
+                <p class="logo-sub">Student Portal</p>
+            </div>
+        </div>
+        <div class="header-user">
+            <div class="user-info">
+                <p class="user-name">Student</p>
+            </div>
+            <a href="/logout" class="icon-btn"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </div>
+</header>
+
+<div class="dashboard-wrapper">
+    <aside class="sidebar">
+        <nav class="sidebar-nav">
+            <a th:href="@{/student/dashboard}" class="nav-item">
+                <i class="fas fa-home"></i><span>Dashboard</span>
+            </a>
+            <a th:href="@{/student/book-ride}" class="nav-item active">
+                <i class="fas fa-map-marker-alt"></i><span>Book Ride</span>
+            </a>
+            <a th:href="@{/student/riders}" class="nav-item">
+                <i class="fas fa-users"></i><span>Available Riders</span>
+            </a>
+            <a th:href="@{/student/profile}" class="nav-item">
+                <i class="fas fa-user"></i><span>Profile</span>
+            </a>
+        </nav>
+    </aside>
+
+    <main class="dashboard-main">
+        <div style="max-width: 800px; margin: 0 auto;">
+
+            <div class="mb-8">
+                <h2 class="page-title">Rider Found!</h2>
+                <p class="page-sub">Your rider is on the way</p>
+            </div>
+
+            <div class="auth-card">
+
+                <!-- SUCCESS MESSAGE -->
+                <div class="success-banner">
+                    <i class="fas fa-check-circle"></i>
+                    Ride confirmed! Your rider has been notified and will contact you shortly
+                </div>
+
+                <!-- ROUTE DISPLAY -->
+                <div class="route-display" style="margin-bottom: 24px;">
+                    <div class="route-point">
+                        <i class="fas fa-map-marker-alt" style="color:#1A6B3C;"></i>
+                        <div>
+                            <p style="font-size:11px; color:#6B7280; margin:0;">Pickup</p>
+                            <p style="margin:0; font-weight:500;" th:text="${ride.pickupLocation}">Pickup</p>
+                        </div>
+                    </div>
+                    <div class="route-line"></div>
+                    <div class="route-point">
+                        <i class="fas fa-flag" style="color:#F59E0B;"></i>
+                        <div>
+                            <p style="font-size:11px; color:#6B7280; margin:0;">Destination</p>
+                            <p style="margin:0; font-weight:500;" th:text="${ride.destination}">Destination</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- RIDER DETAILS -->
+                <h3 style="font-size:18px; font-weight:600; margin-bottom:16px;">Rider Details</h3>
+                <div style="display:flex; align-items:center; gap:24px; margin-bottom:24px;">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=rider" alt="Rider"
+                         style="width:80px; height:80px; border-radius:50%; border: 4px solid #E8F5EE;">
+                    <div>
+                        <h4 style="font-size:18px; margin-bottom:8px;"
+                            th:text="${ride.rider.user.firstName + ' ' + ride.rider.user.lastName}">Rider Name</h4>
+                        <p style="color:#6B7280; font-size:14px; margin:0;">
+                            <i class="fas fa-id-card" style="margin-right:6px;"></i>
+                            Plate: <span th:text="${ride.rider.plateNumber}">VU-001</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- CONTACT & BANK -->
+                <div class="form-grid-2" style="margin-bottom:16px;">
+                    <div class="info-box">
+                        <div class="info-box-label"><i class="fas fa-phone"></i> Phone Number</div>
+                        <p class="info-box-value" th:text="${ride.rider.phoneNumber}">+234 803 456 7890</p>
+                    </div>
+                    <div class="info-box">
+                        <div class="info-box-label"><i class="fas fa-credit-card"></i> Bank Details</div>
+                        <p style="font-size:13px; color:#1F2937; margin:0;" th:text="${ride.rider.bankName}">Bank Name</p>
+                        <p class="info-box-value" th:text="${ride.rider.accountNumber}">1234567890</p>
+                    </div>
+                </div>
+
+                <!-- FARE -->
+                <div class="fare-box amber" style="margin-bottom:24px;">
+                    <span>Fare Amount:</span>
+                    <span class="fare-amount amber" th:text="'₦' + ${ride.fare}">₦100</span>
+                </div>
+                <p style="font-size:13px; color:#6B7280; margin-bottom:24px;">
+                    Please transfer to the rider's account after your ride
+                </p>
+
+                <!-- ACTIONS -->
+                <div class="form-grid-2">
+                    <a th:href="'tel:' + ${ride.rider.phoneNumber}" class="btn-primary full-width"
+                       style="display:flex; align-items:center; justify-content:center; gap:8px;">
+                        <i class="fas fa-phone"></i> Call Rider
+                    </a>
+                    <a th:href="@{/student/book-ride}" class="btn-outline full-width"
+                       style="display:flex; align-items:center; justify-content:center;">
+                        Book Another Ride
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+<script th:inline="javascript">
+    var studentId = [[${session.studentId}]];
+    if (studentId) {
+        var socket = new SockJS('/ws');
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function() {
+            stompClient.subscribe('/topic/ride-completed/' + studentId, function() {
+                window.location.href = '/student/dashboard';
+            });
+        });
+    }
+</script>
+
+</body>
+</html>

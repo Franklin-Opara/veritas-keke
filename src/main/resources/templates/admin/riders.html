@@ -72,147 +72,44 @@
         <!-- RIDERS LIST -->
         <div id="riders-list">
 
-            <div class="list-card" data-name="mr. johnson eze" data-keke="vu-001" data-email="johnson.eze@email.com">
+            <div th:each="rider : ${riders}" class="list-card"
+                 th:attr="data-name=${#strings.toLowerCase(rider.user.firstName + ' ' + rider.user.lastName)},
+              data-keke=${#strings.toLowerCase(rider.plateNumber)},
+              data-email=${#strings.toLowerCase(rider.user.email)}">
                 <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Johnson" class="list-avatar">
+                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=rider" alt="Rider" class="list-avatar">
                     <div class="list-info">
                         <div class="list-info-header">
                             <div>
                                 <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
-                                    <h3 class="list-name">Mr. Johnson Eze</h3>
-                                    <span class="badge-available">Available</span>
+                                    <h3 class="list-name" th:text="${rider.user.firstName + ' ' + rider.user.lastName}">Name</h3>
+                                    <span th:if="${rider.isAvailable}" class="badge-available">Available</span>
+                                    <span th:unless="${rider.isAvailable}" class="badge-busy">Unavailable</span>
                                 </div>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-001</div>
+                                <div class="list-sub"><i class="fas fa-id-card"></i> <span th:text="${rider.plateNumber}">Plate</span></div>
                             </div>
-                            <button class="btn-delete" onclick="confirmDelete(this)">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
+                            <form th:action="@{/admin/delete-rider}" method="post"
+                                  onsubmit="return confirmDeleteForm(this)">
+                                <input type="hidden" name="riderId" th:value="${rider.id}">
+                                <button type="submit" class="btn-delete">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </form>
                         </div>
                         <div class="form-grid-2" style="margin-top:12px;">
                             <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> johnson.eze@email.com</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 803 456 7890</div>
-                                <div class="list-detail"><i class="fas fa-credit-card"></i> First Bank of Nigeria • 1234567890</div>
+                                <div class="list-detail"><i class="fas fa-envelope"></i> <span th:text="${rider.user.email}">Email</span></div>
+                                <div class="list-detail"><i class="fas fa-phone"></i> <span th:text="${rider.phoneNumber}">Phone</span></div>
+                                <div class="list-detail"><i class="fas fa-credit-card"></i> <span th:text="${rider.bankName + ' • ' + rider.accountNumber}">Bank</span></div>
                             </div>
                             <div class="form-grid-2">
                                 <div class="mini-stat">
                                     <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">245</p>
+                                    <p class="mini-stat-value" th:text="${rider.totalRides}">0</p>
                                 </div>
                                 <div class="mini-stat">
                                     <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Jan 2024</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="mrs. adeyemi grace" data-keke="vu-002" data-email="adeyemi.grace@email.com">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Adeyemi" alt="Adeyemi" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
-                                    <h3 class="list-name">Mrs. Adeyemi Grace</h3>
-                                    <span class="badge-busy">Busy</span>
-                                </div>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-002</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this)">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> adeyemi.grace@email.com</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 805 123 4567</div>
-                                <div class="list-detail"><i class="fas fa-credit-card"></i> GTBank • 0987654321</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">312</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Dec 2023</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="mr. okafor peter" data-keke="vu-003" data-email="okafor.peter@email.com">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Okafor" alt="Okafor" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
-                                    <h3 class="list-name">Mr. Okafor Peter</h3>
-                                    <span class="badge-available">Available</span>
-                                </div>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-003</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this)">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> okafor.peter@email.com</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 807 890 1234</div>
-                                <div class="list-detail"><i class="fas fa-credit-card"></i> Access Bank • 5555666677</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">189</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Feb 2024</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="list-card" data-name="mr. ibrahim musa" data-keke="vu-004" data-email="ibrahim.musa@email.com">
-                <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Ibrahim" alt="Ibrahim" class="list-avatar">
-                    <div class="list-info">
-                        <div class="list-info-header">
-                            <div>
-                                <div style="display:flex; align-items:center; gap:12px; margin-bottom:4px;">
-                                    <h3 class="list-name">Mr. Ibrahim Musa</h3>
-                                    <span class="badge-busy" style="background-color:#F3F4F6; color:#6B7280;">Offline</span>
-                                </div>
-                                <div class="list-sub"><i class="fas fa-id-card"></i> VU-004</div>
-                            </div>
-                            <button class="btn-delete" onclick="confirmDelete(this)">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </div>
-                        <div class="form-grid-2" style="margin-top:12px;">
-                            <div>
-                                <div class="list-detail"><i class="fas fa-envelope"></i> ibrahim.musa@email.com</div>
-                                <div class="list-detail"><i class="fas fa-phone"></i> +234 806 234 5678</div>
-                                <div class="list-detail"><i class="fas fa-credit-card"></i> Zenith Bank • 7777888899</div>
-                            </div>
-                            <div class="form-grid-2">
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Total Rides</p>
-                                    <p class="mini-stat-value">156</p>
-                                </div>
-                                <div class="mini-stat">
-                                    <p class="mini-stat-label">Joined</p>
-                                    <p class="mini-stat-value">Mar 2024</p>
+                                    <p class="mini-stat-value" th:text="${#temporals.format(rider.user.createdAt, 'MMM yyyy')}">Jan 2024</p>
                                 </div>
                             </div>
                         </div>
@@ -251,21 +148,8 @@
         document.getElementById('no-results').style.display = visible === 0 ? 'block' : 'none';
     }
 
-    let deleteTimers = {};
-    let timerCount = 0;
-
-    function confirmDelete(btn) {
-        if (btn.classList.contains('confirm')) {
-            btn.closest('.list-card').remove();
-        } else {
-            btn.classList.add('confirm');
-            btn.innerHTML = '<i class="fas fa-trash"></i> Confirm?';
-            const id = timerCount++;
-            deleteTimers[id] = setTimeout(() => {
-                btn.classList.remove('confirm');
-                btn.innerHTML = '<i class="fas fa-trash"></i> Delete';
-            }, 3000);
-        }
+    function confirmDeleteForm(form) {
+        return confirm('Are you sure you want to delete this rider?');
     }
 </script>
 
