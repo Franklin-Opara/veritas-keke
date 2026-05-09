@@ -333,6 +333,7 @@ body {
     font-weight: 500;
     cursor: pointer;
     transition: all 0.2s;
+
 }
 
 .role-tab:hover {
@@ -343,6 +344,12 @@ body {
     background-color: #1A6B3C;
     color: #ffffff;
     border-color: #1A6B3C;
+}
+.role-tab-btn{
+    background:none;
+    border:none;
+    width:100%;
+
 }
 
 /* FORM ROW */

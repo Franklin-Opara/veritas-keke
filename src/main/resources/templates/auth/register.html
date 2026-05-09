@@ -22,123 +22,117 @@
     </div>
 
     <!-- FORM CARD -->
-    <div class="auth-card">
+    <div class="auth-card" >
+
 
         <!-- ROLE SELECTION -->
         <div class="form-group">
             <label>Register as</label>
             <div class="role-tabs" style="grid-template-columns: repeat(2, 1fr);">
-                <button class="role-tab active" onclick="selectRole(this, 'student')">
+                <button class="role-tab active" >
                     <div>Student</div>
                     <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Book rides</div>
                 </button>
-                <button class="role-tab" onclick="selectRole(this, 'rider')">
-                    <div>Rider</div>
-                    <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Offer rides</div>
-                </button>
+
+                <a href="register-rider" class="role-tab">
+                    <button class="role-tab-btn">
+                        <div>Rider</div>
+                        <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Offer rides</div>
+                    </button>
+                </a>
             </div>
         </div>
-
-        <!-- NAME ROW -->
-        <div class="form-grid-2">
-            <div class="form-group">
-                <label>First Name</label>
-                <input type="text" class="form-input" placeholder="Enter first name">
-            </div>
-            <div class="form-group">
-                <label>Last Name</label>
-                <input type="text" class="form-input" placeholder="Enter last name">
-            </div>
-        </div>
-
-        <!-- STUDENT FIELDS -->
-        <div id="student-fields">
-            <div class="form-group">
-                <label>Matric Number</label>
-                <input type="text" class="form-input" placeholder="Enter your matric number">
-            </div>
-        </div>
-
-        <!-- RIDER FIELDS -->
-        <div id="rider-fields" style="display: none;">
+        <form action="/students/register" method="post">
             <div class="form-grid-2">
                 <div class="form-group">
-                    <label>Keke Plate Number</label>
-                    <input type="text" class="form-input" placeholder="e.g., VU-123">
+                    <label>First Name</label>
+                    <input type="text" name="firstName" class="form-input" placeholder="Enter first name">
                 </div>
                 <div class="form-group">
-                    <label>Bank Name</label>
-                    <input type="text" class="form-input" placeholder="Enter bank name">
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" class="form-input" placeholder="Enter last name">
                 </div>
             </div>
-            <div class="form-group">
-                <label>Account Number</label>
-                <input type="text" class="form-input" placeholder="Enter account number">
-            </div>
-        </div>
 
-        <!-- EMAIL -->
-        <div class="form-group">
-            <label>Email Address</label>
-            <input type="email" class="form-input" placeholder="Enter your email">
-        </div>
-
-        <!-- PHONE -->
-        <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" class="form-input" placeholder="Enter phone number">
-        </div>
-
-        <!-- PASSWORD ROW -->
-        <div class="form-grid-2">
-            <div class="form-group">
-                <label>Password</label>
-                <div class="input-wrapper">
-                    <input type="password" id="password-input" class="form-input" placeholder="Create password">
-                    <button type="button" class="toggle-password" onclick="togglePassword('password-input', 'eye-icon-1')">
-                        <i class="fas fa-eye" id="eye-icon-1"></i>
-                    </button>
+            <!-- STUDENT FIELDS -->
+            <div id="student-fields">
+                <div class="form-group">
+                    <label>Matric Number</label>
+                    <input type="text" name="matricNumber" class="form-input" placeholder="Enter your matric number">
                 </div>
             </div>
+
+
+
+            <!-- EMAIL -->
             <div class="form-group">
-                <label>Confirm Password</label>
-                <div class="input-wrapper">
-                    <input type="password" id="confirm-password-input" class="form-input" placeholder="Confirm password">
-                    <button type="button" class="toggle-password" onclick="togglePassword('confirm-password-input', 'eye-icon-2')">
-                        <i class="fas fa-eye" id="eye-icon-2"></i>
-                    </button>
+                <label>Email Address</label>
+                <input type="email" name="email" class="form-input" placeholder="Enter your email">
+            </div>
+
+            <!-- PHONE -->
+            <div class="form-group">
+                <label>Phone Number</label>
+                <input type="tel" name="phoneNumber" class="form-input" placeholder="Enter phone number">
+            </div>
+
+            <!-- PASSWORD ROW -->
+            <div class="form-grid-2">
+                <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" name="password" id="password-input" class="form-input" placeholder="Create password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('password-input', 'eye-icon-1')">
+                            <i class="fas fa-eye" id="eye-icon-1"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <div class="input-wrapper">
+                        <input type="password" name="confirmPassword" id="confirm-password-input" class="form-input" placeholder="Confirm password">
+                        <button type="button" class="toggle-password" onclick="togglePassword('confirm-password-input', 'eye-icon-2')">
+                            <i class="fas fa-eye" id="eye-icon-2"></i>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- PROFILE PHOTO -->
-        <div class="form-group">
-            <label>Profile Photo</label>
-            <div class="upload-area" onclick="document.getElementById('photo-upload').click()">
-                <i class="fas fa-upload upload-icon"></i>
-                <p class="upload-text">Click to upload or drag and drop</p>
-                <p class="upload-hint">PNG, JPG up to 5MB</p>
-                <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+            <!-- PROFILE PHOTO -->
+            <div class="form-group">
+                <label>Profile Photo</label>
+                <div class="upload-area" onclick="document.getElementById('photo-upload').click()">
+                    <i class="fas fa-upload upload-icon"></i>
+                    <p class="upload-text">Click to upload or drag and drop</p>
+                    <p class="upload-hint">PNG, JPG up to 5MB</p>
+                    <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                </div>
             </div>
-        </div>
 
-        <!-- TERMS -->
-        <div class="form-group">
-            <label class="checkbox-label" style="align-items: flex-start;">
-                <input type="checkbox" style="margin-top: 3px;">
-                <span style="font-size: 13px; color: #6B7280;">
+            <!-- TERMS -->
+            <div class="form-group">
+                <label class="checkbox-label" style="align-items: flex-start;">
+                    <input type="checkbox" style="margin-top: 3px;">
+                    <span style="font-size: 13px; color: #6B7280;">
                         I agree to the <a href="#" class="link-primary">Terms and Conditions</a> and <a href="#" class="link-primary">Privacy Policy</a>
                     </span>
-            </label>
-        </div>
+                </label>
+            </div>
 
-        <!-- REGISTER BUTTON -->
-        <button class="btn-primary full-width">Create Account</button>
+            <!-- REGISTER BUTTON -->
+            <button type="submit" class="btn-primary full-width">
+                Create Account
+            </button>
 
-        <!-- LOGIN LINK -->
-        <p class="auth-footer-text" style="margin-top: 16px;">
-            Already have an account? <a href="/login" class="link-primary">Sign in here</a>
-        </p>
+            <!-- LOGIN LINK -->
+            <p class="auth-footer-text" style="margin-top: 16px;">
+                Already have an account? <a href="/login" class="link-primary">Sign in here</a>
+            </p>
+
+        </form>
+
+        <!-- NAME ROW -->
+
 
     </div>
 
@@ -150,18 +144,7 @@
 </div>
 
 <script>
-    function selectRole(btn, role) {
-        document.querySelectorAll('.role-tab').forEach(t => t.classList.remove('active'));
-        btn.classList.add('active');
 
-        if (role === 'student') {
-            document.getElementById('student-fields').style.display = 'block';
-            document.getElementById('rider-fields').style.display = 'none';
-        } else {
-            document.getElementById('student-fields').style.display = 'none';
-            document.getElementById('rider-fields').style.display = 'block';
-        }
-    }
 
     function togglePassword(inputId, iconId) {
         const input = document.getElementById(inputId);
