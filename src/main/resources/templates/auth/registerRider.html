@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register - Veritas Keke</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body class="auth-body">
+
+<div class="auth-wrapper" style="max-width: 680px;">
+
+  <!-- LOGO -->
+  <div class="auth-logo">
+    <div class="logo-icon large">
+      <i class="fas fa-bus"></i>
+    </div>
+    <h1 class="auth-title">Create Account</h1>
+    <p class="auth-sub">Join Veritas Keke transportation system</p>
+  </div>
+
+  <!-- FORM CARD -->
+  <div class="auth-card">
+
+    <!-- ROLE SELECTION -->
+    <div class="form-group">
+      <label>Register as</label>
+      <div class="role-tabs" style="grid-template-columns: repeat(2, 1fr);">
+        <a href="register" class="role-tab">
+          <button class="role-tab-btn" >
+            <div>Student</div>
+            <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Book rides</div>
+          </button>
+        </a>
+
+        <button class="role-tab active" >
+          <div>Rider</div>
+          <div style="font-size: 11px; opacity: 0.8; margin-top: 4px;">Offer rides</div>
+        </button>
+      </div>
+    </div>
+    <form action="/riders/register" method="post">
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>First Name</label>
+          <input type="text" name="firstName" class="form-input" placeholder="Enter first name">
+        </div>
+        <div class="form-group">
+          <label>Last Name</label>
+          <input type="text" name="lastName" class="form-input" placeholder="Enter last name">
+        </div>
+      </div>
+
+
+      <!-- RIDER FIELDS -->
+      <div id="rider-fields" >
+        <div class="form-grid-2">
+          <div class="form-group">
+            <label>Keke Plate Number</label>
+            <input type="text" name="plateNumber" class="form-input" placeholder="e.g., VU-123">
+          </div>
+          <div class="form-group">
+            <label>Bank Name</label>
+            <input type="text" name="bankName" class="form-input" placeholder="Enter bank name">
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Account Number</label>
+          <input type="text" name="accountNumber" class="form-input" placeholder="Enter account number">
+        </div>
+      </div>
+
+      <!-- EMAIL -->
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" name="email" class="form-input" placeholder="Enter your email">
+      </div>
+
+      <!-- PHONE -->
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="phoneNumber" class="form-input" placeholder="Enter phone number">
+      </div>
+
+      <!-- PASSWORD ROW -->
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label>Password</label>
+          <div class="input-wrapper">
+            <input type="password" name="password" id="password-input" class="form-input" placeholder="Create password">
+            <button type="button" class="toggle-password" onclick="togglePassword('password-input', 'eye-icon-1')">
+              <i class="fas fa-eye" id="eye-icon-1"></i>
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Confirm Password</label>
+          <div class="input-wrapper">
+            <input type="password" name="confirmPassword" id="confirm-password-input" class="form-input" placeholder="Confirm password">
+            <button type="button" class="toggle-password" onclick="togglePassword('confirm-password-input', 'eye-icon-2')">
+              <i class="fas fa-eye" id="eye-icon-2"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PROFILE PHOTO -->
+      <div class="form-group">
+        <label>Profile Photo</label>
+        <div class="upload-area" onclick="document.getElementById('photo-upload').click()">
+          <i class="fas fa-upload upload-icon"></i>
+          <p class="upload-text">Click to upload or drag and drop</p>
+          <p class="upload-hint">PNG, JPG up to 5MB</p>
+          <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+        </div>
+      </div>
+
+      <!-- TERMS -->
+      <div class="form-group">
+        <label class="checkbox-label" style="align-items: flex-start;">
+          <input type="checkbox" style="margin-top: 3px;">
+          <span style="font-size: 13px; color: #6B7280;">
+                        I agree to the <a href="#" class="link-primary">Terms and Conditions</a> and <a href="#" class="link-primary">Privacy Policy</a>
+                    </span>
+        </label>
+      </div>
+
+      <!-- REGISTER BUTTON -->
+      <button type="submit" class="btn-primary full-width">Create Account</button>
+
+      <!-- LOGIN LINK -->
+      <p class="auth-footer-text" style="margin-top: 16px;">
+        Already have an account? <a href="/login" class="link-primary">Sign in here</a>
+      </p>
+
+
+    </form>
+
+    <!-- NAME ROW -->
+
+  </div>
+
+  <!-- BACK TO HOME -->
+  <div class="text-center mt-16">
+    <a href="/landing" class="link-muted">← Back to Home</a>
+  </div>
+
+</div>
+
+<script>
+
+  function togglePassword(inputId, iconId) {
+      const input = document.getElementById(inputId);
+      const icon = document.getElementById(iconId);
+      if (input.type === 'password') {
+          input.type = 'text';
+          icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+          input.type = 'password';
+          icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+  }
+</script>
+
+</body>
+</html>
