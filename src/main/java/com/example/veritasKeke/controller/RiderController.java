@@ -46,11 +46,6 @@ public class RiderController {
         Rider rider = riderService.getRiderByUserId((Long) session.getAttribute("userId"));
         Ride activeRide = rideService.getActiveRideForRider(riderId);
 
-        // Only block if unavailable AND no active ride
-        if (!rider.getIsAvailable() && activeRide == null) {
-            return "redirect:/rider/dashboard";
-        }
-
         model.addAttribute("rider", rider);
         model.addAttribute("searchingRides", rideService.getSearchingRides());
         model.addAttribute("activeRide", activeRide);

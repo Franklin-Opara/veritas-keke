@@ -24,8 +24,8 @@
         </div>
         <div class="header-user">
             <div class="user-info">
-                <p class="user-name">Mr. Johnson Eze</p>
-                <p class="user-sub">VU-001</p>
+                <p class="user-name" th:text="${rider.user.firstName + ' ' + rider.user.lastName}"></p>
+                <p class="user-sub" th:text="${rider.plateNumber}"></p>
             </div>
             <a href="/logout" class="icon-btn">
                 <i class="fas fa-sign-out-alt"></i>

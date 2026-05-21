@@ -114,49 +114,47 @@
 
 
 
-<script>
-    let isAvailable = true;
-
-    function submitToggle() {
-        document.getElementById('toggle-form').submit();
-    }
-</script>
-
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
 <script th:inline="javascript">
     var notificationSound = new Audio('/sounds/newRequest.mp3');
 
-    var isAvailable = /*[[${rider.isAvailable}]]*/ false;
+    var isAvailable = Boolean(/*[[${rider.isAvailable}]]*/ false);
 
-    var socket = new SockJS('/ws');
-    var stompClient = Stomp.over(socket);
-    stompClient.connect({}, function() {
-        stompClient.subscribe('/topic/ride-requests', function() {
-            if (!isAvailable) return; // ignore if unavailable
+    if (window.SockJS && window.Stomp) {
+        var socket = new SockJS('/ws');
+        var stompClient = Stomp.over(socket);
+        stompClient.connect({}, function() {
+            stompClient.subscribe('/topic/ride-requests', function() {
+                if (!isAvailable) return;
 
-            notificationSound.play();
+                notificationSound.play().catch(function() {
+                    // Browsers can block audio until the user interacts with the page.
+                });
 
-            var badge = document.querySelector('.nav-badge');
-            if (badge) {
-                badge.style.display = 'inline';
-                badge.textContent = parseInt(badge.textContent || '0') + 1;
-            } else {
-                var requestLink = document.querySelector('a[href="/rider/requests"]');
-                var newBadge = document.createElement('span');
-                newBadge.className = 'nav-badge';
-                newBadge.textContent = '1';
-                requestLink.appendChild(newBadge);
-            }
+                var badge = document.querySelector('.nav-badge');
+                if (badge) {
+                    badge.style.display = 'inline';
+                    badge.textContent = parseInt(badge.textContent || '0') + 1;
+                } else {
+                    var requestLink = document.querySelector('a[href="/rider/requests"]');
+                    if (requestLink) {
+                        var newBadge = document.createElement('span');
+                        newBadge.className = 'nav-badge';
+                        newBadge.textContent = '1';
+                        requestLink.appendChild(newBadge);
+                    }
+                }
 
-            var ctaSub = document.querySelector('.cta-card-sub');
-            if (ctaSub) {
-                var match = ctaSub.textContent.match(/\d+/);
-                var current = match ? parseInt(match[0]) : 0;
-                ctaSub.textContent = 'You have ' + (current + 1) + ' pending ride request(s)';
-            }
+                var ctaSub = document.querySelector('.cta-card-sub');
+                if (ctaSub) {
+                    var match = ctaSub.textContent.match(/\d+/);
+                    var current = match ? parseInt(match[0]) : 0;
+                    ctaSub.textContent = 'You have ' + (current + 1) + ' pending ride request(s)';
+                }
+            });
         });
-    });
+    }
 
     function submitToggle() {
         document.getElementById('toggle-form').submit();

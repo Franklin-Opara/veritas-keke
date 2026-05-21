@@ -20,8 +20,7 @@ public class StudentController {
         Long studentId = (Long) session.getAttribute("studentId");
         if (studentId == null) return "redirect:/login";
 
-        Student student = studentService.getStudentByUserId(
-                (Long) session.getAttribute("userId"));
+        Student student = getSessionStudent(session);
 
         model.addAttribute("student", student);
         model.addAttribute("availableRidersCount", rideService.getAvailableRiders().size());
@@ -33,6 +32,9 @@ public class StudentController {
     public String availableRiders(HttpSession session, Model model) {
         if (session.getAttribute("studentId") == null) return "redirect:/login";
 
+        Student student = getSessionStudent(session);
+
+        model.addAttribute("student", student);
         model.addAttribute("riders", rideService.getAvailableRiders());
         return "student/available-riders";
     }
@@ -43,6 +45,7 @@ public class StudentController {
 
         Long studentId = (Long) session.getAttribute("studentId");
         Ride activeRide = rideService.getActiveRideForStudent(studentId);
+        model.addAttribute("student", getSessionStudent(session));
 
         if (activeRide != null) {
             model.addAttribute("activeRide", activeRide);
@@ -66,6 +69,7 @@ public class StudentController {
         Ride ride = rideService.requestRide(studentId, pickupLocation, destination);
         session.setAttribute("currentRideId", ride.getId());
 
+        model.addAttribute("student", getSessionStudent(session));
         model.addAttribute("ride", ride);
         model.addAttribute("searching", true);
         return "student/book-ride";
@@ -75,8 +79,7 @@ public class StudentController {
     public String profile(HttpSession session, Model model) {
         if (session.getAttribute("studentId") == null) return "redirect:/login";
 
-        Student student = studentService.getStudentByUserId(
-                (Long) session.getAttribute("userId"));
+        Student student = getSessionStudent(session);
 
         model.addAttribute("student", student);
         return "student/profile";
@@ -94,6 +97,7 @@ public class StudentController {
         }
 
         model.addAttribute("ride", ride);
+        model.addAttribute("student", getSessionStudent(session));
 
         if (ride.getStatus().name().equals("ACCEPTED")) {
             return "student/ride-found";
@@ -114,5 +118,9 @@ public class StudentController {
         }
 
         return "redirect:/student/book-ride";
+    }
+
+    private Student getSessionStudent(HttpSession session) {
+        return studentService.getStudentByUserId((Long) session.getAttribute("userId"));
     }
 }

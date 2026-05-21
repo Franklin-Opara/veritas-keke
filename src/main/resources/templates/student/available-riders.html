@@ -24,8 +24,8 @@
         </div>
         <div class="header-user">
             <div class="user-info">
-                <p class="user-name">John Doe</p>
-                <p class="user-sub">VU/2023/12345</p>
+                <p class="user-name" th:text="${student.user.firstName + ' ' + student.user.lastName}"></p>
+                <p class="user-sub" th:text="${student.matricNumber}"></p>
             </div>
             <a href="/logout" class="icon-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -83,8 +83,8 @@
                     <span class="badge-available">Available</span>
                 </div>
                 <div class="rider-card-image">
-                    <img th:src="@{/images/default-avatar.png}" alt="Rider"
-                         onerror="this.src='https://api.dicebear.com/7.x/avataaars/svg?seed=rider'">
+                    <img th:src="${#strings.isEmpty(rider.profilePhoto) ? '/images/defaultProfile.png' : rider.profilePhoto}"
+                         alt="Rider">
                 </div>
                 <div class="rider-card-info">
                     <h3 th:text="${rider.user.firstName + ' ' + rider.user.lastName}">Rider Name</h3>

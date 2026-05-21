@@ -61,8 +61,8 @@
 
         <!-- STATS SUMMARY -->
         <div class="list-summary">
-            <span>Total Students: <strong style="color:#1A6B3C;">5</strong></span>
-            <span id="showing-count" style="color:#6B7280; font-size:13px;">Showing: 5</span>
+            <span>Total Students: <strong style="color:#1A6B3C;" th:text="${totalStudents}">0</strong></span>
+
         </div>
 
         <!-- STUDENTS LIST -->
@@ -74,7 +74,8 @@
               data-id=${#strings.toLowerCase(student.matricNumber)},
               data-email=${#strings.toLowerCase(student.user.email)}">
                 <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=student" alt="Student" class="list-avatar">
+                    <img th:src="${#strings.isEmpty(student.profilePhoto) ? '/images/defaultProfile.png' : student.profilePhoto}"
+                         alt="Student" class="list-avatar">
                     <div class="list-info">
                         <div class="list-info-header">
                             <div>

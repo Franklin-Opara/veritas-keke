@@ -9,4 +9,5 @@ public interface RiderRepository extends JpaRepository<Rider, Long> {
     List<Rider> findByIsAvailableTrue();
 
     Optional<Rider> findByUser_Id(Long userId);
+    boolean existsByPlateNumber(String plateNumber);
 }

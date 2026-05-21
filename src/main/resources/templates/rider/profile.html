@@ -68,7 +68,8 @@
 
                 <!-- PROFILE HEADER -->
                 <div class="profile-header">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Johnson" alt="Profile" class="profile-avatar">
+                    <img th:src="${#strings.isEmpty(rider.profilePhoto) ? '/images/defaultProfile.png' : rider.profilePhoto}"
+                         alt="Profile" class="profile-avatar">
                     <div>
                         <h3 class="profile-name" th:text="${rider.user.firstName + ' ' + rider.user.lastName}"></h3>
                         <p class="profile-role">Rider</p>

@@ -18,7 +18,8 @@ public class AuthService {
     private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     public Student registerStudent(String firstName, String lastName, String email,
-                                   String matricNumber, String phoneNumber, String password) {
+                                   String matricNumber, String phoneNumber, String password,
+                                   String profilePhotoPath) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -32,13 +33,15 @@ public class AuthService {
         student.setUser(user);
         student.setMatricNumber(matricNumber);
         student.setPhoneNumber(phoneNumber);
+        student.setProfilePhoto(profilePhotoPath);
         student.setTotalRides(0);
         return studentRepository.save(student);
     }
 
     public Rider registerRider(String firstName, String lastName, String email,
                                String phoneNumber, String plateNumber,
-                               String bankName, String accountNumber, String password) {
+                               String bankName, String accountNumber, String password,
+                               String profilePhotoPath) {
         User user = new User();
         user.setFirstName(firstName);
         user.setLastName(lastName);
@@ -54,6 +57,7 @@ public class AuthService {
         rider.setPlateNumber(plateNumber);
         rider.setBankName(bankName);
         rider.setAccountNumber(accountNumber);
+        rider.setProfilePhoto(profilePhotoPath);
         rider.setIsAvailable(false);
         rider.setTotalRides(0);
         return riderRepository.save(rider);

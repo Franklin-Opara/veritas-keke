@@ -9,6 +9,12 @@ import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.UUID;
 
 @Controller
 @RequiredArgsConstructor
@@ -45,17 +51,41 @@ public class AuthController {
             @RequestParam(required = false) String matricNumber,
             @RequestParam(required = false) String plateNumber,
             @RequestParam(required = false) String bankName,
-            @RequestParam(required = false) String accountNumber) {
+            @RequestParam(required = false) String accountNumber,
+            @RequestParam(required = false) MultipartFile profilePhoto) throws IOException {
+
+        String profilePhotoPath = saveProfilePhoto(profilePhoto);
 
         if (role.equals("student")) {
             authService.registerStudent(firstName, lastName, email,
-                    matricNumber, phoneNumber, password);
+                    matricNumber, phoneNumber, password, profilePhotoPath);
         } else if (role.equals("rider")) {
             authService.registerRider(firstName, lastName, email,
-                    phoneNumber, plateNumber, bankName, accountNumber, password);
+                    phoneNumber, plateNumber, bankName, accountNumber, password, profilePhotoPath);
         }
 
         return "redirect:/login";
+    }
+
+    private String saveProfilePhoto(MultipartFile profilePhoto) throws IOException {
+        if (profilePhoto == null || profilePhoto.isEmpty()) {
+            return null;
+        }
+
+        String originalFilename = profilePhoto.getOriginalFilename();
+        String extension = "";
+        if (originalFilename != null && originalFilename.contains(".")) {
+            extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+        }
+
+        String filename = UUID.randomUUID() + extension;
+        Path uploadDirectory = Path.of("uploads", "profile-photos");
+        Files.createDirectories(uploadDirectory);
+
+        Path filePath = uploadDirectory.resolve(filename);
+        profilePhoto.transferTo(filePath.toFile());
+
+        return "/uploads/profile-photos/" + filename;
     }
 
     @PostMapping("/login")

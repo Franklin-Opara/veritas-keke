@@ -61,11 +61,11 @@
 
         <!-- STATS SUMMARY -->
         <div class="list-summary">
-            <span>Total Riders: <strong style="color:#1A6B3C;">4</strong></span>
+            <span>Total Riders: <strong style="color:#1A6B3C;" th:text="${totalRiders}">0</strong></span>
             <div style="display:flex; gap:16px; font-size:13px; color:#6B7280;">
-                <span>Available: <strong style="color:#1A6B3C;">2</strong></span>
-                <span>Busy: <strong style="color:#F59E0B;">1</strong></span>
-                <span>Offline: <strong style="color:#6B7280;">1</strong></span>
+                <span>Available: <strong style="color:#1A6B3C;" th:text="${availableRiders}">0</strong></span>
+                <span>Busy: <strong style="color:#F59E0B;" th:text="${busyRiders}">0</strong></span>
+                <span>Offline: <strong style="color:#6B7280;" th:text="${offlineRiders}">0</strong></span>
             </div>
         </div>
 
@@ -77,7 +77,8 @@
               data-keke=${#strings.toLowerCase(rider.plateNumber)},
               data-email=${#strings.toLowerCase(rider.user.email)}">
                 <div class="list-card-inner">
-                    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=rider" alt="Rider" class="list-avatar">
+                    <img th:src="${#strings.isEmpty(rider.profilePhoto) ? '/images/defaultProfile.png' : rider.profilePhoto}"
+                         alt="Rider" class="list-avatar">
                     <div class="list-info">
                         <div class="list-info-header">
                             <div>

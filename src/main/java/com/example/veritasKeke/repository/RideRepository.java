@@ -13,4 +13,7 @@ public interface RideRepository extends JpaRepository<Ride, Long> {
 
     Optional<Ride> findByStudentAndStatusIn(Student student, List<RideStatus> statuses);
     Optional<Ride> findByRiderAndStatus(Rider rider, RideStatus status);
+
+    List<Ride> findByStudent(Student student);
+    List<Ride> findByRider(Rider rider);
 }

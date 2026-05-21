@@ -103,7 +103,7 @@ public class RideService {
 
     private int calculateFare(String destination) {
         if (destination.equalsIgnoreCase("Hostel R") ||
-                destination.equalsIgnoreCase("Hostel S")) {
+                destination.equalsIgnoreCase("Hostel S")){
             return 200;
         }
         return 100;

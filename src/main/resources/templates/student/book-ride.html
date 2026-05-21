@@ -24,8 +24,8 @@
         </div>
         <div class="header-user">
             <div class="user-info">
-                <p class="user-name">John Doe</p>
-                <p class="user-sub">VU/2023/12345</p>
+                <p class="user-name" th:text="${student.user.firstName + ' ' + student.user.lastName}"></p>
+                <p class="user-sub" th:text="${student.matricNumber}"></p>
             </div>
             <a href="/logout" class="icon-btn">
                 <i class="fas fa-sign-out-alt"></i>
@@ -85,20 +85,51 @@
                                 </label>
                                 <select name="pickupLocation" id="pickup" class="form-input" onchange="updateFare()">
                                     <option value="">Select pickup location</option>
-                                    <option>Main Gate</option>
+                                    <option>Auditorium</option>
+                                    <option>Block A</option>
+                                    <option>Block B</option>
+                                    <option>Block C</option>
+                                    <option>Block D</option>
+                                    <option>Cafeteria (Boys Hostel)</option>
+                                    <option>Cafeteria (Girls Hostel)</option>
+                                    <option>Chapel</option>
+                                    <option>CICL Hostel</option>
+                                    <option>Clinic</option>
+                                    <option>Faculty of Law</option>
+                                    <option>Gate</option>
                                     <option>Hostel A</option>
                                     <option>Hostel B</option>
                                     <option>Hostel C</option>
+                                    <option>Hostel D</option>
+                                    <option>Hostel E</option>
+                                    <option>Hostel F</option>
+                                    <option>Hostel G</option>
+                                    <option>Hostel H</option>
+                                    <option>Hostel I</option>
+                                    <option>Hostel J</option>
+                                    <option>Hostel K</option>
+                                    <option>Hostel L</option>
+                                    <option>Hostel M</option>
+                                    <option>Hostel N</option>
+                                    <option>Hostel O</option>
+                                    <option>Hostel P</option>
+                                    <option>Hostel Q</option>
                                     <option>Hostel R</option>
                                     <option>Hostel S</option>
-                                    <option>Faculty of Science</option>
-                                    <option>Faculty of Arts</option>
-                                    <option>Faculty of Engineering</option>
                                     <option>Library</option>
-                                    <option>Cafeteria</option>
+                                    <option>Medicine</option>
+                                    <option>Multipurpose Hall</option>
+                                    <option>New Kelson Hostel</option>
+                                    <option>New Lecture Theatre</option>
+                                    <option>Old Kelson Hostel</option>
+                                    <option>Pa-Etos Hostel</option>
+                                    <option>Pharmacy</option>
+                                    <option>Postgraduate Building</option>
+                                    <option>Senate Building</option>
+                                    <option>Software Engineering</option>
                                     <option>Sports Complex</option>
-                                    <option>Administrative Block</option>
-                                    <option>Medical Center</option>
+                                    <option>Staff Quarters</option>
+                                    <option>Stanzel Hostel</option>
                                 </select>
                             </div>
 
@@ -110,20 +141,51 @@
                                 </label>
                                 <select name="destination" id="destination" class="form-input" onchange="updateFare()">
                                     <option value="">Select destination</option>
-                                    <option>Main Gate</option>
+                                    <option>Auditorium</option>
+                                    <option>Block A</option>
+                                    <option>Block B</option>
+                                    <option>Block C</option>
+                                    <option>Block D</option>
+                                    <option>Cafeteria (Boys Hostel)</option>
+                                    <option>Cafeteria (Girls Hostel)</option>
+                                    <option>Chapel</option>
+                                    <option>CICL Hostel</option>
+                                    <option>Clinic</option>
+                                    <option>Faculty of Law</option>
+                                    <option>Gate</option>
                                     <option>Hostel A</option>
                                     <option>Hostel B</option>
                                     <option>Hostel C</option>
+                                    <option>Hostel D</option>
+                                    <option>Hostel E</option>
+                                    <option>Hostel F</option>
+                                    <option>Hostel G</option>
+                                    <option>Hostel H</option>
+                                    <option>Hostel I</option>
+                                    <option>Hostel J</option>
+                                    <option>Hostel K</option>
+                                    <option>Hostel L</option>
+                                    <option>Hostel M</option>
+                                    <option>Hostel N</option>
+                                    <option>Hostel O</option>
+                                    <option>Hostel P</option>
+                                    <option>Hostel Q</option>
                                     <option>Hostel R</option>
                                     <option>Hostel S</option>
-                                    <option>Faculty of Science</option>
-                                    <option>Faculty of Arts</option>
-                                    <option>Faculty of Engineering</option>
                                     <option>Library</option>
-                                    <option>Cafeteria</option>
+                                    <option>Medicine</option>
+                                    <option>Multipurpose Hall</option>
+                                    <option>New Kelson Hostel</option>
+                                    <option>New Lecture Theatre</option>
+                                    <option>Old Kelson Hostel</option>
+                                    <option>Pa-Etos Hostel</option>
+                                    <option>Pharmacy</option>
+                                    <option>Postgraduate Building</option>
+                                    <option>Senate Building</option>
+                                    <option>Software Engineering</option>
                                     <option>Sports Complex</option>
-                                    <option>Administrative Block</option>
-                                    <option>Medical Center</option>
+                                    <option>Staff Quarters</option>
+                                    <option>Stanzel Hostel</option>
                                 </select>
                             </div>
 

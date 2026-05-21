@@ -26,6 +26,7 @@ public class AdminController {
     public String students(HttpSession session, Model model) {
         if (session.getAttribute("userId") == null) return "redirect:/login";
         model.addAttribute("students", adminService.getAllStudents());
+        model.addAttribute("totalStudents", adminService.getTotalStudents());
         return "admin/students";
     }
 
@@ -33,6 +34,10 @@ public class AdminController {
     public String riders(HttpSession session, Model model) {
         if (session.getAttribute("userId") == null) return "redirect:/login";
         model.addAttribute("riders", adminService.getAllRiders());
+        model.addAttribute("totalRiders", adminService.getTotalRiders());
+        model.addAttribute("availableRiders", adminService.getAvailableRiders());
+        model.addAttribute("busyRiders", adminService.getBusyRiders());
+        model.addAttribute("offlineRiders", adminService.getOfflineRiders());
         return "admin/riders";
     }
 
